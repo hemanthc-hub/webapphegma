@@ -1,0 +1,41 @@
+b1410b1aa368713bf324dfb1f360be5b
+"use strict";
+
+var _interopRequireDefault = require("C:/Users/heman/OneDrive/Documents/hegmakart-webapp/node_modules/@babel/runtime/helpers/interopRequireDefault.js").default;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _react = _interopRequireDefault(require("react"));
+require("./Splashscreen.css");
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _jsxFileName = "C:\\Users\\heman\\OneDrive\\Documents\\hegmakart-webapp\\src\\components\\Home\\Splashscreen.js";
+const SplashScreen = () => {
+  return /*#__PURE__*/(0, _jsxDevRuntime.jsxDEV)("div", {
+    className: "hegma-splash",
+    role: "status",
+    "aria-label": "Loading Hegmakart",
+    children: [/*#__PURE__*/(0, _jsxDevRuntime.jsxDEV)("img", {
+      src: "/assets/images/logo3.png",
+      alt: "Hegmakart",
+      className: "hegma-splash-logo"
+    }, void 0, false, {
+      fileName: _jsxFileName,
+      lineNumber: 7,
+      columnNumber: 7
+    }, void 0), /*#__PURE__*/(0, _jsxDevRuntime.jsxDEV)("div", {
+      className: "hegma-splash-loader",
+      "aria-hidden": "true"
+    }, void 0, false, {
+      fileName: _jsxFileName,
+      lineNumber: 13,
+      columnNumber: 7
+    }, void 0)]
+  }, void 0, true, {
+    fileName: _jsxFileName,
+    lineNumber: 6,
+    columnNumber: 5
+  }, void 0);
+};
+var _default = exports.default = SplashScreen;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6WyJfcmVhY3QiLCJfaW50ZXJvcFJlcXVpcmVEZWZhdWx0IiwicmVxdWlyZSIsIl9qc3hEZXZSdW50aW1lIiwiX2pzeEZpbGVOYW1lIiwiU3BsYXNoU2NyZWVuIiwianN4REVWIiwiY2xhc3NOYW1lIiwicm9sZSIsImNoaWxkcmVuIiwic3JjIiwiYWx0IiwiZmlsZU5hbWUiLCJsaW5lTnVtYmVyIiwiY29sdW1uTnVtYmVyIiwiX2RlZmF1bHQiLCJleHBvcnRzIiwiZGVmYXVsdCJdLCJzb3VyY2VzIjpbIlNwbGFzaHNjcmVlbi5qcyJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgUmVhY3QgZnJvbSBcInJlYWN0XCI7XHJcbmltcG9ydCBcIi4vU3BsYXNoc2NyZWVuLmNzc1wiO1xyXG5cclxuY29uc3QgU3BsYXNoU2NyZWVuID0gKCkgPT4ge1xyXG4gIHJldHVybiAoXHJcbiAgICA8ZGl2IGNsYXNzTmFtZT1cImhlZ21hLXNwbGFzaFwiIHJvbGU9XCJzdGF0dXNcIiBhcmlhLWxhYmVsPVwiTG9hZGluZyBIZWdtYWthcnRcIj5cclxuICAgICAgPGltZ1xyXG4gICAgICAgIHNyYz1cIi9hc3NldHMvaW1hZ2VzL2xvZ28zLnBuZ1wiXHJcbiAgICAgICAgYWx0PVwiSGVnbWFrYXJ0XCJcclxuICAgICAgICBjbGFzc05hbWU9XCJoZWdtYS1zcGxhc2gtbG9nb1wiXHJcbiAgICAgIC8+XHJcblxyXG4gICAgICA8ZGl2IGNsYXNzTmFtZT1cImhlZ21hLXNwbGFzaC1sb2FkZXJcIiBhcmlhLWhpZGRlbj1cInRydWVcIj48L2Rpdj5cclxuICAgIDwvZGl2PlxyXG4gICk7XHJcbn07XHJcblxyXG5leHBvcnQgZGVmYXVsdCBTcGxhc2hTY3JlZW47Il0sIm1hcHBpbmdzIjoiOzs7Ozs7O0FBQUEsSUFBQUEsTUFBQSxHQUFBQyxzQkFBQSxDQUFBQyxPQUFBO0FBQ0FBLE9BQUE7QUFBNEIsSUFBQUMsY0FBQSxHQUFBRCxPQUFBO0FBQUEsSUFBQUUsWUFBQTtBQUU1QixNQUFNQyxZQUFZLEdBQUdBLENBQUEsS0FBTTtFQUN6QixvQkFDRSxJQUFBRixjQUFBLENBQUFHLE1BQUE7SUFBS0MsU0FBUyxFQUFDLGNBQWM7SUFBQ0MsSUFBSSxFQUFDLFFBQVE7SUFBQyxjQUFXLG1CQUFtQjtJQUFBQyxRQUFBLGdCQUN4RSxJQUFBTixjQUFBLENBQUFHLE1BQUE7TUFDRUksR0FBRyxFQUFDLDBCQUEwQjtNQUM5QkMsR0FBRyxFQUFDLFdBQVc7TUFDZkosU0FBUyxFQUFDO0lBQW1CO01BQUFLLFFBQUEsRUFBQVIsWUFBQTtNQUFBUyxVQUFBO01BQUFDLFlBQUE7SUFBQSxTQUM5QixDQUFDLGVBRUYsSUFBQVgsY0FBQSxDQUFBRyxNQUFBO01BQUtDLFNBQVMsRUFBQyxxQkFBcUI7TUFBQyxlQUFZO0lBQU07TUFBQUssUUFBQSxFQUFBUixZQUFBO01BQUFTLFVBQUE7TUFBQUMsWUFBQTtJQUFBLFNBQU0sQ0FBQztFQUFBO0lBQUFGLFFBQUEsRUFBQVIsWUFBQTtJQUFBUyxVQUFBO0lBQUFDLFlBQUE7RUFBQSxTQUMzRCxDQUFDO0FBRVYsQ0FBQztBQUFDLElBQUFDLFFBQUEsR0FBQUMsT0FBQSxDQUFBQyxPQUFBLEdBRWFaLFlBQVkiLCJpZ25vcmVMaXN0IjpbXX0=

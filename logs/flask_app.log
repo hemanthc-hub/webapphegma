@@ -1,0 +1,8 @@
+2026-08-05T07:41:44.349Z | INFO     | logger:_setup_logger:126 | cid=- | Logger initialised — LOCAL mode (stdout + logs/flask_app.log)  event=logger_init
+2026-08-05T07:41:44.357Z | DEBUG    | db:getConnection:18 | cid=- | DB connecting to localhost:5432/dev_hegma as nagarajbhat  event=db_connect  db_host=localhost  db_port=5432  db_name=dev_hegma  db_user=nagarajbhat
+2026-08-05T07:44:09.064Z | INFO     | logger:_setup_logger:126 | cid=- | Logger initialised — LOCAL mode (stdout + logs/flask_app.log)  event=logger_init
+2026-08-05T07:44:09.067Z | DEBUG    | db:getConnection:18 | cid=- | DB connecting to localhost:5432/dev_hegma as nagarajbhat  event=db_connect  db_host=localhost  db_port=5432  db_name=dev_hegma  db_user=nagarajbhat
+2026-08-05T07:45:03.023Z | INFO     | logger:_setup_logger:126 | cid=- | Logger initialised — LOCAL mode (stdout + logs/flask_app.log)  event=logger_init
+2026-08-05T07:45:03.025Z | DEBUG    | db:getConnection:18 | cid=- | DB connecting to localhost:5432/dev_hegma as nagarajbhat  event=db_connect  db_host=localhost  db_port=5432  db_name=dev_hegma  db_user=nagarajbhat
+2026-08-05T07:45:52.695Z | INFO     | logger:_setup_logger:126 | cid=- | Logger initialised — LOCAL mode (stdout + logs/flask_app.log)  event=logger_init
+2026-08-05T07:45:52.698Z | DEBUG    | db:getConnection:18 | cid=- | DB connecting to localhost:5432/dev_hegma as nagarajbhat  event=db_connect  db_host=localhost  db_port=5432  db_name=dev_hegma  db_user=nagarajbhat

@@ -1,0 +1,43 @@
+.termsPart1{
+    display: flex;
+    border: 1px solid #c7ced5;
+}
+
+.allProducts{
+border-right: 1px solid #c7ced5;
+padding: 0 30px;
+font-family: Poppins,sans-serif;
+ 
+    line-height: 2.4rem;
+    color: #777;
+    position: relative;
+    width:140px;
+   
+}
+.allProducts p{
+    font-size: 1.6rem;
+   
+}
+
+.allProductsConditions{
+    font-family: Poppins,sans-serif;
+    font-size: 1.4rem;
+    line-height: 2.4rem;
+    color: #777;
+    padding-left: 50px;
+    padding-top: 10px;
+    padding-right: 10px;
+}
+.allProductsConditions li{
+    list-style: initial;
+}
+
+.allProductsConditions2{
+    font-family: Poppins,sans-serif;
+    font-size: 1.4rem;
+    line-height: 2.4rem;
+    color: #777;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-right: 10px;
+}

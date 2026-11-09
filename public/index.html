@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/assets/images/logo3.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/assets/images/logo3.png" />
+    <!-- <link rel="manifest" href="%PUBLIC_URL%/manifest.json" /> -->
+    <script>
+      // Suppress cross-origin "Script error." caused by third-party analytics/chat scripts in Safari dev server
+      window.addEventListener('error', function (e) {
+        if (e.message === 'Script error.' || (e.filename && !e.filename.includes('localhost') && !e.filename.includes(window.location.hostname))) {
+          e.stopImmediatePropagation();
+          e.preventDefault();
+          console.warn('Suppressed third-party script error in Safari:', e.message || 'Script error');
+          return true;
+        }
+      }, true);
+    </script>
+    <style>
+        body .zsiq_floatmain {
+            right: 20px !important;
+            bottom: 70px !important;
+        }
+
+        @media only screen and (max-width: 600px) {
+            ul.nav.nav-tabs.list.flex-column.mb-0 {
+                flex-wrap: unset !important;
+                display: -webkit-box !important;
+                overflow-y: hidden;
+            }
+        }
+
+        @media only screen and (max-width: 600px) {
+            .list li {
+                border-top: 1px solid white !important;
+            }
+        }
+
+        button.btn.btn-primary.btn-lg.show-modal {
+            background: white !important;
+            color: black;
+        }
+
+        .modal-box {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .show-modal {
+            color: #fff;
+            background: #F3630F;
+            font-size: 18px;
+            font-weight: 600;
+            text-transform: capitalize;
+            padding: 10px 15px;
+            margin: 200px auto 0;
+            border: none;
+            outline: none;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            display: block;
+            transition: all 0.3s ease 0s;
+        }
+
+        .show-modal:hover,
+        .show-modal:focus {
+            color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+            outline: none;
+        }
+
+
+
+
+        .modal-dialog {
+            width: 400px;
+            margin: 70px auto 0;
+        }
+
+        .modal-dialog {
+            transform: scale(0.5);
+        }
+
+        .modal-dialog {
+            transform: scale(1);
+        }
+
+        .modal-dialog .modal-content {
+            text-align: center;
+            border: none;
+        }
+
+        .modal-content .close {
+            color: #fff;
+            background: #F3630F;
+            font-size: 25px;
+            font-weight: 400;
+            text-shadow: none;
+            line-height: 27px;
+            height: 25px;
+            width: 25px;
+            border-radius: 50%;
+            overflow: hidden;
+            opacity: 1;
+            position: absolute;
+            left: auto;
+            right: 8px;
+            top: 8px;
+            z-index: 1;
+            transition: all 0.3s;
+        }
+
+        .modal-content .close:hover {
+            color: #fff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .close:focus {
+            outline: none;
+        }
+
+        .modal-body {
+            padding: 50px 40px 50px !important;
+        }
+
+        .modal-body .title {
+            color: #026fd4;
+            font-size: 33px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin: 0 0 10px;
+        }
+
+        .modal-body .description {
+            color: #9A9EA9;
+            font-size: 16px;
+            margin: 0 0 20px;
+        }
+
+        .modal-body .form-group {
+            text-align: left;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .modal-body .input-icon {
+            color: #777;
+            font-size: 18px;
+            transform: translateY(-50%);
+            position: absolute;
+            top: 50%;
+            left: 20px;
+        }
+
+        .modal-body .form-control {
+            font-size: 17px;
+            height: 45px;
+            width: 100%;
+            padding: 6px 0 6px 50px;
+            margin: 0 auto;
+            border: 2px solid #eee;
+            border-radius: 5px;
+            box-shadow: none;
+            outline: none;
+        }
+
+        .form-control::placeholder {
+            color: #AEAFB1;
+        }
+
+        .form-group.checkbox {
+            width: 130px;
+            margin-top: 0;
+            display: inline-block;
+        }
+
+        .form-group.checkbox label {
+            color: #9A9EA9;
+            font-weight: normal;
+        }
+
+        .form-group.checkbox input[type=checkbox] {
+            margin-left: 0;
+        }
+
+        .modal-body .forgot-pass {
+            color: #7F7FD5;
+            font-size: 13px;
+            text-align: right;
+            width: calc(100% - 135px);
+            margin: 2px 0;
+            display: inline-block;
+            vertical-align: top;
+            transition: all 0.3s ease 0s;
+        }
+
+        .forgot-pass:hover {
+            color: #9A9EA9;
+            text-decoration: underline;
+        }
+
+        .modal-content .modal-body .btn {
+            color: #fff;
+            background: #F3630F;
+            font-size: 16px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            line-height: 38px;
+            width: 100%;
+            height: 40px;
+            padding: 0;
+            border: none;
+            border-radius: 5px;
+            border: none;
+            display: inline-block;
+            transition: all 0.6s ease 0s;
+        }
+
+        .modal-content .modal-body .btn:hover {
+            color: #fff;
+            letter-spacing: 2px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content .modal-body .btn:focus {
+            outline: none;
+        }
+
+        @media only screen and (max-width: 480px) {
+            .modal-dialog {
+                width: 95% !important;
+            }
+
+            .modal-content .modal-body {
+                padding: 60px 20px 40px !important;
+            }
+        }
+    </style>
+    <script>
+        WebFontConfig = {
+            google: { families: ['Open+Sans:300,400,600,700,800', 'Poppins:300,400,500,600,700', 'Shadows+Into+Light:400', 'DM+Sans:300,400,500,600,700', 'Outfit:300,400,500,600,700,800,900'] }
+        };
+        (function (d) {
+            var wf = d.createElement('script'), s = d.scripts[0];
+            wf.src = 'https://hegmadental.s3.ap-south-1.amazonaws.com/static/assets/js/webfont.js';
+            wf.async = true;
+            s.parentNode.insertBefore(wf, s);
+        })(document);
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V9HBJZVKPV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-V9HBJZVKPV');
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-T83X9DX4');</script>
+    <!-- End Google Tag Manager -->
+    <!-- Plugins CSS File -->
+    <link rel="stylesheet" href="https://hegmadental.s3.ap-south-1.amazonaws.com/static/assets/css/bootstrap.min.css">
+
+
+    <!-- Main CSS File -->
+    <!-- <link rel="stylesheet" href="assets/css/demo21.min.css"> -->
+    <!-- Main CSS File -->
+
+    <link rel="stylesheet" href="https://hegmadental.s3.ap-south-1.amazonaws.com/static/assets/css/style.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://hegmadental.s3.ap-south-1.amazonaws.com/static/assets/vendor/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://hegmadental.s3.ap-south-1.amazonaws.com/static/assets/vendor/simple-line-icons/css/simple-line-icons.min.css">
+
+</head>
+
+<body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T83X9DX4" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <div class="page-wrapper">
+        <noscript>You need to enable JavaScript to run this app.</noscript>
+        <div id="root"></div>
+    </div>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+    <!-- <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> -->
+    <!-- Plugins JS File -->
+    <script src="https://hegmadental.s3.ap-south-1.amazonaws.com/static/assets/js/jquery.min.js"></script>
+    <script src="https://hegmadental.s3.ap-south-1.amazonaws.com/static/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="https://hegmadental.s3.ap-south-1.amazonaws.com/static/assets/js/plugins.min.js"></script>
+    <script
+        src="https://hegmadental.s3.ap-south-1.amazonaws.com/static/assets/js/optional/isotope.pkgd.min.js"></script>
+    <script src="https://hegmadental.s3.ap-south-1.amazonaws.com/static/assets/js/jquery.appear.min.js"></script>
+    <script src="https://hegmadental.s3.ap-south-1.amazonaws.com/static/assets/js/jquery.plugin.min.js"></script>
+    <script src="https://hegmadental.s3.ap-south-1.amazonaws.com/static/assets/js/jquery.countdown.min.js"></script>
+    <script>"function determineDropDirection(){\n  $(\".dropdown-menu\").each( function(){\n    $(this).css({\n      visibility: \"hidden\",\n      display: \"block\"\n    });\n    \n    $(this).parent().removeClass(\"dropup\");\n    \n    if ($(this).offset().top + $(this).outerHeight() > $(window).innerHeight() + $(window).scrollTop()){\n      $(this).parent().addClass(\"dropup\");\n    }\n    \n    $(this).removeAttr(\"style\");\n  });\n}\n\ndetermineDropDirection();\n\n$(window).scroll(determineDropDirection);"</script>
+    <!-- Main JS File -->
+    <script src="https://hegmadental.s3.ap-south-1.amazonaws.com/static/assets/js/main.min.js"></script>
+    <script src="https://hegmadental.s3.ap-south-1.amazonaws.com/static/assets/js/nouislider.min.js"></script>
+    <!-- Google tag (gtag.js) -->
+    <!-- <script type="text/javascript"
+        id="zsiqchat">var $zoho = $zoho || {}; $zoho.salesiq = $zoho.salesiq || { widgetcode: "42e608abc69779026ebd97668bfb98722ce0c0c4e93f7eed1c9d530de562c63d24e228794fd31240521b81cfb18f3540", values: {}, ready: function () { } }; var d = document; s = d.createElement("script"); s.type = "text/javascript"; s.id = "zsiqscript"; s.defer = true; s.src = "https://salesiq.zoho.in/widget"; t = d.getElementsByTagName("script")[0]; t.parentNode.insertBefore(s, t);</script> -->
+</body>
+
+</html>

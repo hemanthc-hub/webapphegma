@@ -1,0 +1,60 @@
+0eab4181c200255bc50ecbf3f867e43e
+"use strict";
+
+var _interopRequireDefault = require("C:/Users/User/Desktop/frontend-2/hegmakart-web-app-feature-ui-v2/node_modules/@babel/runtime/helpers/interopRequireDefault.js").default;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _react = _interopRequireDefault(require("react"));
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _jsxFileName = "C:\\Users\\User\\Desktop\\frontend-2\\hegmakart-web-app-feature-ui-v2\\src\\screens\\Ratings.js";
+const Ratings = ({
+  value
+}) => {
+  return /*#__PURE__*/(0, _jsxDevRuntime.jsxDEV)("div", {
+    children: /*#__PURE__*/(0, _jsxDevRuntime.jsxDEV)("span", {
+      children: [/*#__PURE__*/(0, _jsxDevRuntime.jsxDEV)("i", {
+        className: value >= 1 ? 'fas fa-star text-warning' : value >= 1 ? 'fas fa-star-half-alt' : 'far fa-star'
+      }, void 0, false, {
+        fileName: _jsxFileName,
+        lineNumber: 8,
+        columnNumber: 4
+      }, void 0), /*#__PURE__*/(0, _jsxDevRuntime.jsxDEV)("i", {
+        className: value >= 2 ? 'fas fa-star text-warning' : value >= 2 ? 'fas fa-star-half-alt' : 'far fa-star'
+      }, void 0, false, {
+        fileName: _jsxFileName,
+        lineNumber: 9,
+        columnNumber: 6
+      }, void 0), /*#__PURE__*/(0, _jsxDevRuntime.jsxDEV)("i", {
+        className: value >= 3 ? 'fas fa-star text-warning' : value >= 3 ? 'fas fa-star-half-alt' : 'far fa-star'
+      }, void 0, false, {
+        fileName: _jsxFileName,
+        lineNumber: 10,
+        columnNumber: 6
+      }, void 0), /*#__PURE__*/(0, _jsxDevRuntime.jsxDEV)("i", {
+        className: value >= 4 ? 'fas fa-star text-warning' : value >= 4 ? 'fas fa-star-half-alt' : 'far fa-star'
+      }, void 0, false, {
+        fileName: _jsxFileName,
+        lineNumber: 11,
+        columnNumber: 6
+      }, void 0), /*#__PURE__*/(0, _jsxDevRuntime.jsxDEV)("i", {
+        className: value >= 5 ? 'fas fa-star text-warning' : value >= 5 ? 'fas fa-star-half-alt' : 'far fa-star'
+      }, void 0, false, {
+        fileName: _jsxFileName,
+        lineNumber: 12,
+        columnNumber: 7
+      }, void 0)]
+    }, void 0, true, {
+      fileName: _jsxFileName,
+      lineNumber: 7,
+      columnNumber: 4
+    }, void 0)
+  }, void 0, false, {
+    fileName: _jsxFileName,
+    lineNumber: 6,
+    columnNumber: 6
+  }, void 0);
+};
+var _default = exports.default = Ratings;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6WyJfcmVhY3QiLCJfaW50ZXJvcFJlcXVpcmVEZWZhdWx0IiwicmVxdWlyZSIsIl9qc3hEZXZSdW50aW1lIiwiX2pzeEZpbGVOYW1lIiwiUmF0aW5ncyIsInZhbHVlIiwianN4REVWIiwiY2hpbGRyZW4iLCJjbGFzc05hbWUiLCJmaWxlTmFtZSIsImxpbmVOdW1iZXIiLCJjb2x1bW5OdW1iZXIiLCJfZGVmYXVsdCIsImV4cG9ydHMiLCJkZWZhdWx0Il0sInNvdXJjZXMiOlsiUmF0aW5ncy5qcyJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgUmVhY3QgZnJvbSAncmVhY3QnXG5cbmNvbnN0IFJhdGluZ3MgPSAoe3ZhbHVlfSkgPT4ge1xuXG4gIHJldHVybiAoXG4gICAgIDxkaXY+XG4gICA8c3Bhbj5cbiAgIDxpIGNsYXNzTmFtZT17IHZhbHVlID49IDEgPyAnZmFzIGZhLXN0YXIgdGV4dC13YXJuaW5nJyA6IHZhbHVlID49IDEgPyAnZmFzIGZhLXN0YXItaGFsZi1hbHQnIDogJ2ZhciBmYS1zdGFyJ30+PC9pPlxuICAgICA8aSBjbGFzc05hbWU9eyB2YWx1ZSA+PSAyID8gJ2ZhcyBmYS1zdGFyIHRleHQtd2FybmluZycgOiB2YWx1ZSA+PSAyID8gJ2ZhcyBmYS1zdGFyLWhhbGYtYWx0JyA6ICdmYXIgZmEtc3Rhcid9PjwvaT5cbiAgICAgPGkgY2xhc3NOYW1lPXsgdmFsdWUgPj0gMyA/ICdmYXMgZmEtc3RhciB0ZXh0LXdhcm5pbmcnIDogdmFsdWUgPj0gMyA/ICdmYXMgZmEtc3Rhci1oYWxmLWFsdCcgOiAnZmFyIGZhLXN0YXInfT48L2k+XG4gICAgIDxpIGNsYXNzTmFtZT17IHZhbHVlID49IDQgPyAnZmFzIGZhLXN0YXIgdGV4dC13YXJuaW5nJyA6IHZhbHVlID49IDQgPyAnZmFzIGZhLXN0YXItaGFsZi1hbHQnIDogJ2ZhciBmYS1zdGFyJ30+PC9pPlxuICAgICAgPGkgY2xhc3NOYW1lPXsgdmFsdWUgPj0gNSA/ICdmYXMgZmEtc3RhciB0ZXh0LXdhcm5pbmcnIDogdmFsdWUgPj0gNSA/ICdmYXMgZmEtc3Rhci1oYWxmLWFsdCcgOiAnZmFyIGZhLXN0YXInfT48L2k+XG4gICA8L3NwYW4+XG4gXG4gIDwvZGl2PlxuICApXG59XG5cbmV4cG9ydCBkZWZhdWx0IFJhdGluZ3M7Il0sIm1hcHBpbmdzIjoiOzs7Ozs7O0FBQUEsSUFBQUEsTUFBQSxHQUFBQyxzQkFBQSxDQUFBQyxPQUFBO0FBQXlCLElBQUFDLGNBQUEsR0FBQUQsT0FBQTtBQUFBLElBQUFFLFlBQUE7QUFFekIsTUFBTUMsT0FBTyxHQUFHQSxDQUFDO0VBQUNDO0FBQUssQ0FBQyxLQUFLO0VBRTNCLG9CQUNHLElBQUFILGNBQUEsQ0FBQUksTUFBQTtJQUFBQyxRQUFBLGVBQ0YsSUFBQUwsY0FBQSxDQUFBSSxNQUFBO01BQUFDLFFBQUEsZ0JBQ0EsSUFBQUwsY0FBQSxDQUFBSSxNQUFBO1FBQUdFLFNBQVMsRUFBR0gsS0FBSyxJQUFJLENBQUMsR0FBRywwQkFBMEIsR0FBR0EsS0FBSyxJQUFJLENBQUMsR0FBRyxzQkFBc0IsR0FBRztNQUFjO1FBQUFJLFFBQUEsRUFBQU4sWUFBQTtRQUFBTyxVQUFBO1FBQUFDLFlBQUE7TUFBQSxTQUFJLENBQUMsZUFDaEgsSUFBQVQsY0FBQSxDQUFBSSxNQUFBO1FBQUdFLFNBQVMsRUFBR0gsS0FBSyxJQUFJLENBQUMsR0FBRywwQkFBMEIsR0FBR0EsS0FBSyxJQUFJLENBQUMsR0FBRyxzQkFBc0IsR0FBRztNQUFjO1FBQUFJLFFBQUEsRUFBQU4sWUFBQTtRQUFBTyxVQUFBO1FBQUFDLFlBQUE7TUFBQSxTQUFJLENBQUMsZUFDbEgsSUFBQVQsY0FBQSxDQUFBSSxNQUFBO1FBQUdFLFNBQVMsRUFBR0gsS0FBSyxJQUFJLENBQUMsR0FBRywwQkFBMEIsR0FBR0EsS0FBSyxJQUFJLENBQUMsR0FBRyxzQkFBc0IsR0FBRztNQUFjO1FBQUFJLFFBQUEsRUFBQU4sWUFBQTtRQUFBTyxVQUFBO1FBQUFDLFlBQUE7TUFBQSxTQUFJLENBQUMsZUFDbEgsSUFBQVQsY0FBQSxDQUFBSSxNQUFBO1FBQUdFLFNBQVMsRUFBR0gsS0FBSyxJQUFJLENBQUMsR0FBRywwQkFBMEIsR0FBR0EsS0FBSyxJQUFJLENBQUMsR0FBRyxzQkFBc0IsR0FBRztNQUFjO1FBQUFJLFFBQUEsRUFBQU4sWUFBQTtRQUFBTyxVQUFBO1FBQUFDLFlBQUE7TUFBQSxTQUFJLENBQUMsZUFDakgsSUFBQVQsY0FBQSxDQUFBSSxNQUFBO1FBQUdFLFNBQVMsRUFBR0gsS0FBSyxJQUFJLENBQUMsR0FBRywwQkFBMEIsR0FBR0EsS0FBSyxJQUFJLENBQUMsR0FBRyxzQkFBc0IsR0FBRztNQUFjO1FBQUFJLFFBQUEsRUFBQU4sWUFBQTtRQUFBTyxVQUFBO1FBQUFDLFlBQUE7TUFBQSxTQUFJLENBQUM7SUFBQTtNQUFBRixRQUFBLEVBQUFOLFlBQUE7TUFBQU8sVUFBQTtNQUFBQyxZQUFBO0lBQUEsU0FDL0c7RUFBQztJQUFBRixRQUFBLEVBQUFOLFlBQUE7SUFBQU8sVUFBQTtJQUFBQyxZQUFBO0VBQUEsU0FFSCxDQUFDO0FBRVIsQ0FBQztBQUFBLElBQUFDLFFBQUEsR0FBQUMsT0FBQSxDQUFBQyxPQUFBLEdBRWNWLE9BQU8iLCJpZ25vcmVMaXN0IjpbXX0=

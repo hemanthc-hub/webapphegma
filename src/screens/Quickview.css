@@ -1,0 +1,54 @@
+.modalBackground {
+    width: 100%;
+    height: 100%;
+    background:rgba(0, 0, 0, 0.8);
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1050;
+   
+  }
+  .quickDescription{
+    max-height: 25vh;
+    overflow-y: scroll;
+  }
+  
+  .modalContainer {
+    width: 85%;
+    max-height: 85vh;
+    position: relative;
+  border-radius: 0%;
+    display: flex;
+    flex-direction: row;
+    padding: 30px;
+    z-index: 1050;
+    background-color: white;  
+    padding-top: 80px;
+    overflow-y: scroll;
+  }
+
+  .titleCloseBtn {
+    
+    position: absolute;
+    top:10px;
+    right: 25px;
+  }
+  
+  .titleCloseBtn button {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+ 
+  
+ 
+  
+ 
+  
+  
+  
+
+  
+

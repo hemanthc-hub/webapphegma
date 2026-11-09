@@ -1,0 +1,62 @@
+0fe312d4293ec5aae3a5a5dd1ef719c3
+"use strict";
+
+// Mock Apollo client to avoid network calls during App render
+_getJestObj().mock('@apollo/client', () => {
+  const actual = jest.requireActual('@apollo/client');
+  return {
+    ...actual,
+    HttpLink: jest.fn().mockImplementation(() => ({}))
+  };
+});
+var _interopRequireDefault = require("C:/Users/User/Desktop/frontend-2/hegmakart-web-app-feature-ui-v2/node_modules/@babel/runtime/helpers/interopRequireDefault.js").default;
+var _react = _interopRequireDefault(require("react"));
+var _react2 = require("@testing-library/react");
+var _App = _interopRequireDefault(require("./App"));
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _jsxFileName = "C:\\Users\\User\\Desktop\\frontend-2\\hegmakart-web-app-feature-ui-v2\\src\\App.test.js";
+function _getJestObj() {
+  const {
+    jest
+  } = require("@jest/globals");
+  _getJestObj = () => jest;
+  return jest;
+}
+describe('App Component', () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+  test('renders splash screen initially', () => {
+    (0, _react2.render)(/*#__PURE__*/(0, _jsxDevRuntime.jsxDEV)(_App.default, {}, void 0, false, {
+      fileName: _jsxFileName,
+      lineNumber: 24,
+      columnNumber: 12
+    }, void 0));
+    const splash = _react2.screen.getByRole('status', {
+      name: /loading hegmakart/i
+    });
+    expect(splash).toBeInTheDocument();
+  });
+  test('transitions after splash screen timeout', () => {
+    (0, _react2.render)(/*#__PURE__*/(0, _jsxDevRuntime.jsxDEV)(_App.default, {}, void 0, false, {
+      fileName: _jsxFileName,
+      lineNumber: 30,
+      columnNumber: 12
+    }, void 0));
+    expect(_react2.screen.getByRole('status', {
+      name: /loading hegmakart/i
+    })).toBeInTheDocument();
+    (0, _react2.act)(() => {
+      jest.advanceTimersByTime(2100);
+    });
+
+    // Splashscreen is removed
+    expect(_react2.screen.queryByRole('status', {
+      name: /loading hegmakart/i
+    })).not.toBeInTheDocument();
+  });
+});
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6WyJfZ2V0SmVzdE9iaiIsIm1vY2siLCJhY3R1YWwiLCJqZXN0IiwicmVxdWlyZUFjdHVhbCIsIkh0dHBMaW5rIiwiZm4iLCJtb2NrSW1wbGVtZW50YXRpb24iLCJfaW50ZXJvcFJlcXVpcmVEZWZhdWx0IiwicmVxdWlyZSIsImRlZmF1bHQiLCJfcmVhY3QiLCJfcmVhY3QyIiwiX0FwcCIsIl9qc3hEZXZSdW50aW1lIiwiX2pzeEZpbGVOYW1lIiwiZGVzY3JpYmUiLCJiZWZvcmVFYWNoIiwidXNlRmFrZVRpbWVycyIsImFmdGVyRWFjaCIsInVzZVJlYWxUaW1lcnMiLCJ0ZXN0IiwicmVuZGVyIiwianN4REVWIiwiZmlsZU5hbWUiLCJsaW5lTnVtYmVyIiwiY29sdW1uTnVtYmVyIiwic3BsYXNoIiwic2NyZWVuIiwiZ2V0QnlSb2xlIiwibmFtZSIsImV4cGVjdCIsInRvQmVJblRoZURvY3VtZW50IiwiYWN0IiwiYWR2YW5jZVRpbWVyc0J5VGltZSIsInF1ZXJ5QnlSb2xlIiwibm90Il0sInNvdXJjZXMiOlsiQXBwLnRlc3QuanMiXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IFJlYWN0IGZyb20gJ3JlYWN0JztcbmltcG9ydCB7IHJlbmRlciwgc2NyZWVuLCBhY3QgfSBmcm9tICdAdGVzdGluZy1saWJyYXJ5L3JlYWN0JztcbmltcG9ydCBBcHAgZnJvbSAnLi9BcHAnO1xuXG4vLyBNb2NrIEFwb2xsbyBjbGllbnQgdG8gYXZvaWQgbmV0d29yayBjYWxscyBkdXJpbmcgQXBwIHJlbmRlclxuamVzdC5tb2NrKCdAYXBvbGxvL2NsaWVudCcsICgpID0+IHtcbiAgY29uc3QgYWN0dWFsID0gamVzdC5yZXF1aXJlQWN0dWFsKCdAYXBvbGxvL2NsaWVudCcpO1xuICByZXR1cm4ge1xuICAgIC4uLmFjdHVhbCxcbiAgICBIdHRwTGluazogamVzdC5mbigpLm1vY2tJbXBsZW1lbnRhdGlvbigoKSA9PiAoe30pKSxcbiAgfTtcbn0pO1xuXG5kZXNjcmliZSgnQXBwIENvbXBvbmVudCcsICgpID0+IHtcbiAgYmVmb3JlRWFjaCgoKSA9PiB7XG4gICAgamVzdC51c2VGYWtlVGltZXJzKCk7XG4gIH0pO1xuXG4gIGFmdGVyRWFjaCgoKSA9PiB7XG4gICAgamVzdC51c2VSZWFsVGltZXJzKCk7XG4gIH0pO1xuXG4gIHRlc3QoJ3JlbmRlcnMgc3BsYXNoIHNjcmVlbiBpbml0aWFsbHknLCAoKSA9PiB7XG4gICAgcmVuZGVyKDxBcHAgLz4pO1xuICAgIGNvbnN0IHNwbGFzaCA9IHNjcmVlbi5nZXRCeVJvbGUoJ3N0YXR1cycsIHsgbmFtZTogL2xvYWRpbmcgaGVnbWFrYXJ0L2kgfSk7XG4gICAgZXhwZWN0KHNwbGFzaCkudG9CZUluVGhlRG9jdW1lbnQoKTtcbiAgfSk7XG5cbiAgdGVzdCgndHJhbnNpdGlvbnMgYWZ0ZXIgc3BsYXNoIHNjcmVlbiB0aW1lb3V0JywgKCkgPT4ge1xuICAgIHJlbmRlcig8QXBwIC8+KTtcbiAgICBleHBlY3Qoc2NyZWVuLmdldEJ5Um9sZSgnc3RhdHVzJywgeyBuYW1lOiAvbG9hZGluZyBoZWdtYWthcnQvaSB9KSkudG9CZUluVGhlRG9jdW1lbnQoKTtcblxuICAgIGFjdCgoKSA9PiB7XG4gICAgICBqZXN0LmFkdmFuY2VUaW1lcnNCeVRpbWUoMjEwMCk7XG4gICAgfSk7XG5cbiAgICAvLyBTcGxhc2hzY3JlZW4gaXMgcmVtb3ZlZFxuICAgIGV4cGVjdChzY3JlZW4ucXVlcnlCeVJvbGUoJ3N0YXR1cycsIHsgbmFtZTogL2xvYWRpbmcgaGVnbWFrYXJ0L2kgfSkpLm5vdC50b0JlSW5UaGVEb2N1bWVudCgpO1xuICB9KTtcbn0pO1xuIl0sIm1hcHBpbmdzIjoiOztBQUlBO0FBQ0FBLFdBQUEsR0FBS0MsSUFBSSxDQUFDLGdCQUFnQixFQUFFLE1BQU07RUFDaEMsTUFBTUMsTUFBTSxHQUFHQyxJQUFJLENBQUNDLGFBQWEsQ0FBQyxnQkFBZ0IsQ0FBQztFQUNuRCxPQUFPO0lBQ0wsR0FBR0YsTUFBTTtJQUNURyxRQUFRLEVBQUVGLElBQUksQ0FBQ0csRUFBRSxDQUFDLENBQUMsQ0FBQ0Msa0JBQWtCLENBQUMsT0FBTyxDQUFDLENBQUMsQ0FBQztFQUNuRCxDQUFDO0FBQ0gsQ0FBQyxDQUFDO0FBQUMsSUFBQUMsc0JBQUEsR0FBQUMsT0FBQSxrSUFBQUMsT0FBQTtBQVhILElBQUFDLE1BQUEsR0FBQUgsc0JBQUEsQ0FBQUMsT0FBQTtBQUNBLElBQUFHLE9BQUEsR0FBQUgsT0FBQTtBQUNBLElBQUFJLElBQUEsR0FBQUwsc0JBQUEsQ0FBQUMsT0FBQTtBQUF3QixJQUFBSyxjQUFBLEdBQUFMLE9BQUE7QUFBQSxJQUFBTSxZQUFBO0FBQUEsU0FBQWYsWUFBQTtFQUFBO0lBQUFHO0VBQUEsSUFBQU0sT0FBQTtFQUFBVCxXQUFBLEdBQUFBLENBQUEsS0FBQUcsSUFBQTtFQUFBLE9BQUFBLElBQUE7QUFBQTtBQVd4QmEsUUFBUSxDQUFDLGVBQWUsRUFBRSxNQUFNO0VBQzlCQyxVQUFVLENBQUMsTUFBTTtJQUNmZCxJQUFJLENBQUNlLGFBQWEsQ0FBQyxDQUFDO0VBQ3RCLENBQUMsQ0FBQztFQUVGQyxTQUFTLENBQUMsTUFBTTtJQUNkaEIsSUFBSSxDQUFDaUIsYUFBYSxDQUFDLENBQUM7RUFDdEIsQ0FBQyxDQUFDO0VBRUZDLElBQUksQ0FBQyxpQ0FBaUMsRUFBRSxNQUFNO0lBQzVDLElBQUFDLGNBQU0sZUFBQyxJQUFBUixjQUFBLENBQUFTLE1BQUEsRUFBQ1YsSUFBQSxDQUFBSCxPQUFHO01BQUFjLFFBQUEsRUFBQVQsWUFBQTtNQUFBVSxVQUFBO01BQUFDLFlBQUE7SUFBQSxTQUFFLENBQUMsQ0FBQztJQUNmLE1BQU1DLE1BQU0sR0FBR0MsY0FBTSxDQUFDQyxTQUFTLENBQUMsUUFBUSxFQUFFO01BQUVDLElBQUksRUFBRTtJQUFxQixDQUFDLENBQUM7SUFDekVDLE1BQU0sQ0FBQ0osTUFBTSxDQUFDLENBQUNLLGlCQUFpQixDQUFDLENBQUM7RUFDcEMsQ0FBQyxDQUFDO0VBRUZYLElBQUksQ0FBQyx5Q0FBeUMsRUFBRSxNQUFNO0lBQ3BELElBQUFDLGNBQU0sZUFBQyxJQUFBUixjQUFBLENBQUFTLE1BQUEsRUFBQ1YsSUFBQSxDQUFBSCxPQUFHO01BQUFjLFFBQUEsRUFBQVQsWUFBQTtNQUFBVSxVQUFBO01BQUFDLFlBQUE7SUFBQSxTQUFFLENBQUMsQ0FBQztJQUNmSyxNQUFNLENBQUNILGNBQU0sQ0FBQ0MsU0FBUyxDQUFDLFFBQVEsRUFBRTtNQUFFQyxJQUFJLEVBQUU7SUFBcUIsQ0FBQyxDQUFDLENBQUMsQ0FBQ0UsaUJBQWlCLENBQUMsQ0FBQztJQUV0RixJQUFBQyxXQUFHLEVBQUMsTUFBTTtNQUNSOUIsSUFBSSxDQUFDK0IsbUJBQW1CLENBQUMsSUFBSSxDQUFDO0lBQ2hDLENBQUMsQ0FBQzs7SUFFRjtJQUNBSCxNQUFNLENBQUNILGNBQU0sQ0FBQ08sV0FBVyxDQUFDLFFBQVEsRUFBRTtNQUFFTCxJQUFJLEVBQUU7SUFBcUIsQ0FBQyxDQUFDLENBQUMsQ0FBQ00sR0FBRyxDQUFDSixpQkFBaUIsQ0FBQyxDQUFDO0VBQzlGLENBQUMsQ0FBQztBQUNKLENBQUMsQ0FBQyIsImlnbm9yZUxpc3QiOltdfQ==

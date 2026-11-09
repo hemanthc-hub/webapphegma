@@ -1,0 +1,6 @@
+export enum FieldEnum {
+    RATING = "RATING",
+    PRICE = "PRICE",
+    PUBLICATION_DATE = "PUBLICATION_DATE",
+    PRIORITY="PRIORITY"
+}

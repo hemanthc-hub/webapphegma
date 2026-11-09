@@ -1,0 +1,164 @@
+.couponInput{
+    margin-left: 15px;
+    width: 260px;
+    outline: none;
+    border-bottom: 1px solid #e7e7e7;
+    border-top: 0;
+    border-right: 0;
+    border-left: 0;
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+.couponButton{
+    background: transparent;
+    outline: navajowhite;
+   color: orangered;
+    border: 1px solid orangered;
+    padding: 6px 13px;
+    cursor: pointer;
+}
+.fw-600{font-weight: 600;}
+.CheckoutAddressModalContainer {
+    width: 558px;
+    height: 500px;
+    border-radius: 3px;
+    background-color: white;
+    box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    z-index: 1000;
+    position: relative;
+    overflow: scroll;
+}
+
+.CheckoutAddressModalBackground {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,.6);
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .CheckouttitleCloseBtn{
+    right: 10px;
+    position: absolute;
+    top: 10px;
+  }
+
+  .CheckouttitleCloseBtn {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .CheckouttitleCloseBtn button {
+    background-color: transparent;
+    border: none;
+    font-size: 25px;
+    cursor: pointer;
+  }
+ .addtoCartPghCon{
+    display: flex;
+    margin-top: 20px;
+    height: "fit-content";
+    border: "1px solid rgb(191 199 203)";
+
+ }
+ /* Product Screen Addto cart container align */
+ .overoffer{overflow-y: auto;height: 280px;
+ }
+ @media (max-width: 610px) {
+  .addtoCartPghCon{
+   /* height: 130px; */
+ }
+ }
+ @media (max-width: 540px) {
+  .addtoCartPghCon{
+    display:inherit;
+    margin-top: 20px;
+    height: 160px!important;
+    border: "1px solid rgb(191 199 203)";
+    
+ }
+ 
+ .soldOut{
+  display:flex;
+  flex-wrap:wrap;
+}
+.soldOutCon{
+  /* height: 120px!important; */
+}
+ }
+ @media (max-width: 470px) {
+  .addtoCartPghCon{
+    display:inherit;
+    margin-top: 20px;
+   height: fit-content!important;
+    border: "1px solid rgb(191 199 203)";
+ }
+ .overoffer{overflow-y:unset;height: 280px;
+ }
+ .soldOut{
+  display:flex;
+  flex-wrap:wrap;
+}
+.soldOutCon{
+  height: 120px!important;
+}
+ }
+ @media (max-width: 340px) {
+  .addtoCartPghCon{
+   /* height: 240px!important; */
+ }
+ .soldOutCon{
+  height: 150px!important;
+}}
+@media (max-width: 310px) {
+  .addtoCartPghCon{
+   /* height: 280px!important; */
+ }
+ .soldOutCon{
+  height: 175px!important;
+}}
+@media (max-width: 285px) {
+  .addtoCartPghCon{
+   height: 210px!important;
+ }
+
+ .soldOutCon{
+  height: 175px!important;
+}}
+/* end */
+
+  @media (max-width: 593px) {
+    .couponInput{
+      margin-left: 15px;
+      width: 150px;
+      outline: none;
+      border-bottom: 1px solid #e7e7e7;
+      border-top: 0;
+      border-right: 0;
+      border-left: 0;
+      margin-top: 10px;
+      font-size: 20px;
+  }
+  }
+
+  @media (max-width: 436px) {
+    .pincodeAvailableButton{
+      height: 100%;
+      margin: 2px 0;
+  }
+  
+  .pincodeAvailableBox{
+      height: 30px;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      width: 240px;
+  }
+  }
+

@@ -1,0 +1,52 @@
+.hegma-splash {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2147483647;
+  background-color:#E0F7FF;
+}
+
+.hegma-splash-logo {
+  width: min(70vw, 220px);
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.hegma-splash-loader {
+  width: 28px;
+  height: 28px;
+  margin-top: 24px;
+  border: 3px solid #e5e7eb;
+  border-top-color: #2563eb;
+  border-radius: 50%;
+  animation: hegma-spin 2s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hegma-splash-loader {
+    animation-duration: 10.0s;
+  }
+}
+@keyframes hegma-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+    /* @keyframes hegma-spin {
+    to {
+        transform: rotate(360deg);
+    }
+    } */

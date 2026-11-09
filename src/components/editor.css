@@ -1,0 +1,31 @@
+.ce-block__content {
+    position: relative;
+    max-width: 98%!important;
+    margin: 0 auto;
+    -webkit-transition: background-color .15s ease;
+    transition: background-color .15s ease;
+}
+.cdx-block{
+    padding-top: 0!important;
+}
+.ce-toolbar__content{
+    max-width: 98%!important;
+    margin: 0 auto;
+    position: relative;
+}
+.codex-editor__redactor{
+    padding-bottom: 4px!important;
+}
+.editorJs{
+    min-height: 20px;
+    max-height:100% ;
+}
+.codex-editor--narrow .codex-editor__redactor{
+    margin-right: 0px!important;
+}
+.editorJs .text-center {
+    text-align: left!important;
+}
+.cdx-input{
+    display: none!important;
+}

@@ -1,0 +1,104 @@
+.banner-marquee-section {
+  width: calc(100% - 40px);
+  margin: 35px auto 0;
+  overflow: hidden;
+  padding-top: 0px;
+  display: flex;
+  flex-direction: column;
+  margin-left:35px;
+    padding-bottom: 0;
+}
+
+.marquee-row {
+  width: 98%;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 10px 0 0 0 ;
+}
+
+.marquee-content {
+  display: inline-flex;
+  gap: 16px;
+  /* Pause animation on hover */
+  /* pointer-events affects hovering on links, let's just pause the animation */
+}
+
+.marquee-content:hover {
+  animation-play-state: paused;
+}
+
+.marquee-content.left-to-right {
+  animation: marquee-left-to-right 40s linear infinite;
+}
+
+.marquee-content.right-to-left {
+  animation: marquee-right-to-left 40s linear infinite;
+}
+
+@keyframes marquee-right-to-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-left-to-right {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+.banner-item {
+  width: 320px;
+  height: 180px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  flex-shrink: 0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: white;
+  border: 1px solid #e2e8f0;
+  
+}
+
+.banner-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+}
+
+.banner-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.banner-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 16px; /* Ensure images don't clip the rounded borders */
+}
+
+@media (max-width: 768px) {
+  .banner-item {
+    width: 260px;
+    height: 140px;
+  }
+  
+}
+
+@media (max-width: 480px) {
+  .banner-item {
+    width: 220px;
+    height: 120px;
+  }
+}
+@media (max-width: 768px) {
+  .banner-marquee-section {
+    width: 100%;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top:25px;
+  }
+
+  .marquee-row {
+    width: 100%;
+  }
+}

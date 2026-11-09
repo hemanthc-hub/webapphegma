@@ -1,0 +1,40 @@
+5374cd79d4b1bf62cf1ed6c8bc50f194
+"use strict";
+
+// Mock tesseract.js worker
+_getJestObj().mock('tesseract.js', () => ({
+  createWorker: jest.fn(async () => ({
+    loadLanguage: jest.fn(),
+    initialize: jest.fn(),
+    recognize: jest.fn(async () => ({
+      data: {
+        text: ''
+      }
+    })),
+    terminate: jest.fn()
+  }))
+}));
+require("@testing-library/jest-dom");
+function _getJestObj() {
+  const {
+    jest
+  } = require("@jest/globals");
+  _getJestObj = () => jest;
+  return jest;
+} // jest-dom adds custom jest matchers for asserting on DOM nodes.
+// allows you to do things like:
+// expect(element).toHaveTextContent(/react/i)
+// learn more: https://github.com/testing-library/jest-dom
+// Mock window globals not supported in jsdom
+window.scrollTo = jest.fn();
+window.matchMedia = window.matchMedia || function () {
+  return {
+    matches: false,
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn()
+  };
+};
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6WyJfZ2V0SmVzdE9iaiIsIm1vY2siLCJjcmVhdGVXb3JrZXIiLCJqZXN0IiwiZm4iLCJsb2FkTGFuZ3VhZ2UiLCJpbml0aWFsaXplIiwicmVjb2duaXplIiwiZGF0YSIsInRleHQiLCJ0ZXJtaW5hdGUiLCJyZXF1aXJlIiwid2luZG93Iiwic2Nyb2xsVG8iLCJtYXRjaE1lZGlhIiwibWF0Y2hlcyIsImFkZExpc3RlbmVyIiwicmVtb3ZlTGlzdGVuZXIiLCJhZGRFdmVudExpc3RlbmVyIiwicmVtb3ZlRXZlbnRMaXN0ZW5lciIsImRpc3BhdGNoRXZlbnQiXSwic291cmNlcyI6WyJzZXR1cFRlc3RzLmpzIl0sInNvdXJjZXNDb250ZW50IjpbIi8vIGplc3QtZG9tIGFkZHMgY3VzdG9tIGplc3QgbWF0Y2hlcnMgZm9yIGFzc2VydGluZyBvbiBET00gbm9kZXMuXG4vLyBhbGxvd3MgeW91IHRvIGRvIHRoaW5ncyBsaWtlOlxuLy8gZXhwZWN0KGVsZW1lbnQpLnRvSGF2ZVRleHRDb250ZW50KC9yZWFjdC9pKVxuLy8gbGVhcm4gbW9yZTogaHR0cHM6Ly9naXRodWIuY29tL3Rlc3RpbmctbGlicmFyeS9qZXN0LWRvbVxuaW1wb3J0ICdAdGVzdGluZy1saWJyYXJ5L2plc3QtZG9tJztcblxuLy8gTW9jayB3aW5kb3cgZ2xvYmFscyBub3Qgc3VwcG9ydGVkIGluIGpzZG9tXG53aW5kb3cuc2Nyb2xsVG8gPSBqZXN0LmZuKCk7XG5cbndpbmRvdy5tYXRjaE1lZGlhID0gd2luZG93Lm1hdGNoTWVkaWEgfHwgZnVuY3Rpb24gKCkge1xuICByZXR1cm4ge1xuICAgIG1hdGNoZXM6IGZhbHNlLFxuICAgIGFkZExpc3RlbmVyOiBqZXN0LmZuKCksXG4gICAgcmVtb3ZlTGlzdGVuZXI6IGplc3QuZm4oKSxcbiAgICBhZGRFdmVudExpc3RlbmVyOiBqZXN0LmZuKCksXG4gICAgcmVtb3ZlRXZlbnRMaXN0ZW5lcjogamVzdC5mbigpLFxuICAgIGRpc3BhdGNoRXZlbnQ6IGplc3QuZm4oKSxcbiAgfTtcbn07XG5cbi8vIE1vY2sgdGVzc2VyYWN0LmpzIHdvcmtlclxuamVzdC5tb2NrKCd0ZXNzZXJhY3QuanMnLCAoKSA9PiAoe1xuICBjcmVhdGVXb3JrZXI6IGplc3QuZm4oYXN5bmMgKCkgPT4gKHtcbiAgICBsb2FkTGFuZ3VhZ2U6IGplc3QuZm4oKSxcbiAgICBpbml0aWFsaXplOiBqZXN0LmZuKCksXG4gICAgcmVjb2duaXplOiBqZXN0LmZuKGFzeW5jICgpID0+ICh7XG4gICAgICBkYXRhOiB7IHRleHQ6ICcnIH0sXG4gICAgfSkpLFxuICAgIHRlcm1pbmF0ZTogamVzdC5mbigpLFxuICB9KSksXG59KSk7XG5cbiJdLCJtYXBwaW5ncyI6Ijs7QUFvQkE7QUFDQUEsV0FBQSxHQUFLQyxJQUFJLENBQUMsY0FBYyxFQUFFLE9BQU87RUFDL0JDLFlBQVksRUFBRUMsSUFBSSxDQUFDQyxFQUFFLENBQUMsYUFBYTtJQUNqQ0MsWUFBWSxFQUFFRixJQUFJLENBQUNDLEVBQUUsQ0FBQyxDQUFDO0lBQ3ZCRSxVQUFVLEVBQUVILElBQUksQ0FBQ0MsRUFBRSxDQUFDLENBQUM7SUFDckJHLFNBQVMsRUFBRUosSUFBSSxDQUFDQyxFQUFFLENBQUMsYUFBYTtNQUM5QkksSUFBSSxFQUFFO1FBQUVDLElBQUksRUFBRTtNQUFHO0lBQ25CLENBQUMsQ0FBQyxDQUFDO0lBQ0hDLFNBQVMsRUFBRVAsSUFBSSxDQUFDQyxFQUFFLENBQUM7RUFDckIsQ0FBQyxDQUFDO0FBQ0osQ0FBQyxDQUFDLENBQUM7QUExQkhPLE9BQUE7QUFBbUMsU0FBQVgsWUFBQTtFQUFBO0lBQUFHO0VBQUEsSUFBQVEsT0FBQTtFQUFBWCxXQUFBLEdBQUFBLENBQUEsS0FBQUcsSUFBQTtFQUFBLE9BQUFBLElBQUE7QUFBQSxFQUpuQztBQUNBO0FBQ0E7QUFDQTtBQUdBO0FBQ0FTLE1BQU0sQ0FBQ0MsUUFBUSxHQUFHVixJQUFJLENBQUNDLEVBQUUsQ0FBQyxDQUFDO0FBRTNCUSxNQUFNLENBQUNFLFVBQVUsR0FBR0YsTUFBTSxDQUFDRSxVQUFVLElBQUksWUFBWTtFQUNuRCxPQUFPO0lBQ0xDLE9BQU8sRUFBRSxLQUFLO0lBQ2RDLFdBQVcsRUFBRWIsSUFBSSxDQUFDQyxFQUFFLENBQUMsQ0FBQztJQUN0QmEsY0FBYyxFQUFFZCxJQUFJLENBQUNDLEVBQUUsQ0FBQyxDQUFDO0lBQ3pCYyxnQkFBZ0IsRUFBRWYsSUFBSSxDQUFDQyxFQUFFLENBQUMsQ0FBQztJQUMzQmUsbUJBQW1CLEVBQUVoQixJQUFJLENBQUNDLEVBQUUsQ0FBQyxDQUFDO0lBQzlCZ0IsYUFBYSxFQUFFakIsSUFBSSxDQUFDQyxFQUFFLENBQUM7RUFDekIsQ0FBQztBQUNILENBQUMiLCJpZ25vcmVMaXN0IjpbXX0=

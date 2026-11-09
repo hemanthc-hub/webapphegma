@@ -1,0 +1,218 @@
+diff --git a/src/screens/ProductScreen.js b/src/screens/ProductScreen.js
+index 95a5971..935b965 100644
+--- a/src/screens/ProductScreen.js
++++ b/src/screens/ProductScreen.js
+@@ -75,14 +75,7 @@ function ProductScreen() {
+   const [errorMe, errorMessage] = useState([]);
+   const [gplProductData, setGplProductData] = useState([]);
+   const [productReviewData, setProductReviewData] = useState("");
+-  const [productA, setProductA] = useState(() => {
+-    const saved = localStorage.getItem("delivery_pincode");
+-    if (saved) {
+-      const pin = saved.split(' - ')[0]; // Extract the pincode part
+-      if (/^\d{6}$/.test(pin)) return pin;
+-    }
+-    return "";
+-  });
++  const [productA, setProductA] = useState([]);
+   const [modals, setModals] = useState("")
+   const [ServiceAvailabilityPopup, setServiceAvailabilityPopup] = useState(false);
+   const [ServiceUnavailabilityPopup, setServiceUnavailabilityPopup] = useState(false);
+@@ -103,30 +96,21 @@ function ProductScreen() {
+   let arr = ""
+   //console.log("slug",(slug))
+ 
++  const wishlistToken = localStorage.getItem('wishlistToken');
++  const { data: wishlistData } = useQuery(GET_CHECKOUT_BY_TOKEN, {
++    skip: !wishlistToken,
++    variables: {
++      token: wishlistToken
++    },
++  })
+   useEffect(() => {
+-    let wt = [];
+-    try {
+-      wt = JSON.parse(localStorage.getItem('wishlistToken')) || [];
+-    } catch(e) {}
+-    setCheckWishlist(wt);
+-    setWishlist(wt);
+-  }, []);
+-
+-  useEffect(() => {
+-    const handleLocationUpdate = () => {
+-      const saved = localStorage.getItem("delivery_pincode");
+-      if (saved) {
+-        const pin = saved.split(' - ')[0];
+-        if (/^\d{6}$/.test(pin)) {
+-          setProductA(pin);
+-        }
+-      }
+-    };
+-    window.addEventListener("locationUpdated", handleLocationUpdate);
+-    return () => window.removeEventListener("locationUpdated", handleLocationUpdate);
+-  }, []);
+-
+-
++    if (!wishlistData?.checkout?.lines) return;
++    const lines = wishlistData.checkout.lines;
++    for (let index = 0; index < lines.length; index++) {
++      setCheckWishlist((pre) => [...pre, lines[index].variant.id]);
++      setWishlist((pre) => [...pre, pre, lines[index].variant.id]);
++    }
++  }, [wishlistData]);
+ 
+   const { loading, data: productQueryData } = useQuery(GET_PRODUCT_DETAILS, {
+     fetchPolicy: "no-cache",
+@@ -186,7 +170,7 @@ function ProductScreen() {
+ 
+     // var options = {
+     //   method: 'post',
+-    //   url: 'https://wsi.rocketinpocket.com/hegma/v1/hegma/productDetails',
++    //   url: (process.env.REACT_APP_REST_API_URL || window.location.origin + "") + '/hegma/v1/hegma/productDetails',
+     //   data: JSON.stringify({
+     //     'product_id': slug
+     //   }),
+@@ -326,16 +310,7 @@ function ProductScreen() {
+   }
+ 
+   // console.log("description",description)
+-  let obj = { blocks: [] };
+-  try {
+-    if (description && typeof description === "string") {
+-      obj = JSON.parse(description);
+-    } else if (description && typeof description === "object") {
+-      obj = description;
+-    }
+-  } catch (e) {
+-    // description not yet loaded or invalid JSON — keep fallback
+-  }
++  const obj = JSON.parse(description);
+   //console.log("descriptionJSON.parse",obj)
+   const onAddToCart = async (e) => {
+ 
+@@ -361,8 +336,7 @@ function ProductScreen() {
+           console.log(data);
+           if (data.checkoutCreate.checkout !== null) {
+             localStorage.setItem("cartToken", data.checkoutCreate.checkout.token);
+-            setLoader(false);
+-            window.dispatchEvent(new CustomEvent('cart-updated'));
++            // window.location.reload(false);	
+             refetch()
+           }
+         },
+@@ -381,7 +355,7 @@ function ProductScreen() {
+         onCompleted: (data) => {
+           console.log(data);
+           setLoader(false);
+-          window.dispatchEvent(new CustomEvent('cart-updated'));
++          // window.location.reload(false);
+           refetch()
+         },
+       });
+@@ -402,19 +376,17 @@ function ProductScreen() {
+         ...JSON.parse(localStorage.getItem("wishlistToken")),
+         id,
+       ]));}}
+-      if (localStorage.getItem("token")) {
+-        updateWishlist({
+-          variables: {
+-            input: {
+-              wishlistToken: JSON.stringify([...addwishlist, id]),
+-            },
+-          },
+-          onCompleted: (data) => {
+-            console.log("updateWishlist",data);
+-            refetch()
++      updateWishlist({
++        variables: {
++          input: {
++            wishlistToken: [...addwishlist, id],
+           },
+-        });
+-      }
++        },
++        onCompleted: (data) => {
++          console.log("updateWishlist",data);
++          refetch()
++        },
++      });
+     }
+ 
+     setWishHeart(id === variantId ? "added-wishlist" : "")
+@@ -426,18 +398,6 @@ function ProductScreen() {
+       setWishlist(unWishlist)
+       setAddWishlist(unWishlist)
+       localStorage.setItem("wishlistToken",JSON.stringify(unWishlist));
+-      if (localStorage.getItem("token")) {
+-        updateWishlist({
+-          variables: {
+-            input: {
+-              wishlistToken: JSON.stringify(unWishlist),
+-            },
+-          },
+-          onCompleted: (data) => {
+-            console.log("Removed from Wishlist DB", data);
+-          },
+-        });
+-      }
+       console.log("REMOVE TO WISHLIST")
+     }
+ 
+@@ -629,12 +589,12 @@ function ProductScreen() {
+             </div>
+ 
+             <div class="row">
+-              <div class="col-12 col-md-5 col-lg-5 product-single-gallery">
++              <div class="col-lg-5 col-md-5 product-single-gallery">
+                 <div class="product-slider-container">
+                   <div style={{ display: "flex", justifyContent: "center" }} class="">
+-                    <div style={{ width: "100%", maxWidth: 368, maxHeight: 368 }} class="product-item">
++                    <div style={{ height: 368, width: 368 ,}} class="product-item">
+                       <img
+-                        style={{ width: '100%', height: '100%', objectFit:"contain" }}
++                        style={{ height: '100%',objectFit:"contain" }}
+                         class="product-single-image"
+                         src={currentImage}
+                       />
+@@ -779,7 +739,7 @@ function ProductScreen() {
+               </div>
+               {/* <!-- End .product-single-gallery --> */}
+ 
+-              <div class="col-12 col-md-7 col-lg-7 product-single-details">
++              <div class="col-lg-7 col-md-7 product-single-details">
+                 <h1 class="product-title" style={{ fontSize: "20px", fontWeight: 500 }}>
+                   {product.name}
+                 </h1>
+@@ -950,18 +910,16 @@ function ProductScreen() {
+ 
+                 <form
+                   onSubmit={checkProductAvailability}
+-                  style={{ marginTop: 15, marginBottom: 15 }}
++                  style={{ marginTop: 50, marginBottom: 15 }}
+                 >
+-                  <p style={{ fontWeight: 500, marginBottom: 8 }}>Enter Your Pincode to Check Service Availability</p>
+-                  <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
++                  <p style={{ fontWeight: 500 }}>Enter Your Pincode to Check Service Availability</p>
++                  <div style={{ height: 30, }}>
+                     <input
+                       className="pincodeAvailableBox"
+-                      type="text"
++                      type=""
+                       name="pin"
+                       pattern="[0-9]{6}"
+-                      maxLength="6"
+-                      placeholder="Enter 6-digit pincode"
+-                      value={productA}
++                      maxlength="6"
+                       onChange={(event) => {
+                         setProductA(event.target.value);
+                           setServiceAvailabilityPopup(false);
+@@ -970,7 +928,7 @@ function ProductScreen() {
+                       }}
+                       required
+                     />
+-                    <button type="submit" value="Check-Availability" className="pincodeAvailableButton position-relative">{checkAvailabilityLoader}</button>
++                    <button type="submit" value="Check-Availability" className="mx-3 pincodeAvailableButton position-relative">{checkAvailabilityLoader}</button>
+ 
+                   </div>
+ 

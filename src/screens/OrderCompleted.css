@@ -1,0 +1,15 @@
+.orderCompleted{
+    color:orangered;
+    font-size: 50px;
+    margin-bottom: 20px;
+}
+
+.containerrr{
+    align-items: center;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.containerrr h4{
+    color: grey;
+}

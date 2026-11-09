@@ -1,0 +1,634 @@
+.signin-section {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+    background: #f8fafc;
+}
+
+/* Close / Guest Button */
+.guest-close-btn {
+    position: fixed;
+    top: 16px;
+    right: 20px;
+    z-index: 999;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1.5px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #475569;
+    transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+}
+
+.guest-close-btn:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: scale(1.08);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.16);
+    color: #0f172a;
+}
+
+
+/* =========================================
+   BACKGROUND IMAGE
+   ========================================= */
+
+.signin-background-picture {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    display: block;
+}
+
+.signin-background {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 20% center;
+    z-index: 0;
+    display: block;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .signin-background {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center center;
+    }
+}
+
+
+/* =========================================
+   BACKGROUND OVERLAY
+   ========================================= */
+
+.signin-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right,
+            rgba(30, 58, 138, 0.25),
+            transparent,
+            transparent);
+}
+
+
+/* =========================================
+   MAIN CONTENT
+   ========================================= */
+
+.signin-content {
+    position: relative;
+    z-index: 10;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 100vh;
+
+    padding: 16px 48px;
+
+    margin-top: -56px;
+}
+
+
+/* =========================================
+   LOGIN CONTAINER
+   ========================================= */
+
+.signin-container {
+    width: 100%;
+    max-width: 960px;
+
+    display: grid;
+    grid-template-columns: 460px 500px;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    margin: 0 auto;
+}
+
+
+/* =========================================
+   ILLUSTRATION
+   ========================================= */
+
+.signin-illustration {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    margin-right: -76px;
+}
+
+.signin-illustration img {
+    width: 500px;
+    height: 500px;
+    object-fit: contain;
+}
+
+
+/* =========================================
+   LOGIN CARD
+   ========================================= */
+
+.signin-card {
+    width: 500px;
+    height: 400px;
+    padding: 24px 20px;
+
+    background: #ffffff;
+
+    border-radius: 0;
+
+    box-shadow:
+        0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+    margin-left: -60px;
+}
+
+
+/* =========================================
+   HEADING
+   ========================================= */
+
+.signin-title {
+    margin: 0;
+
+    font-size: 25px;
+    font-weight: 600;
+
+    line-height: 1.25;
+
+    color: #0f172a;
+}
+
+
+/* =========================================
+   DESCRIPTION
+   ========================================= */
+
+.signin-description {
+    margin: 4px 0 0;
+
+    font-size: 15px;
+    line-height: 24px;
+
+    color: #64748b;
+}
+
+
+/* =========================================
+   FORM
+   ========================================= */
+
+.signin-form {
+    margin-top: 20px;
+}
+
+
+/* =========================================
+   LABEL
+   ========================================= */
+
+.signin-label {
+    display: block;
+
+    margin-bottom: 4px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    color: #334155;
+}
+
+
+/* =========================================
+   INPUT WRAPPER
+   ========================================= */
+
+.input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+
+/* =========================================
+   INPUT ICON
+   ========================================= */
+
+.input-icon {
+    position: absolute;
+
+    left: 16px;
+    top: 50%;
+
+    width: 20px;
+    height: 20px;
+
+    transform: translateY(-50%);
+
+    color: #94a3b8;
+}
+
+
+/* =========================================
+   EMAIL / MOBILE INPUT
+   ========================================= */
+
+.signin-input {
+    width: 100%;
+    height: 44px;
+
+    padding: 0 12px 0 48px;
+
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+
+    font-size: 15px;
+
+    outline: none;
+
+    box-sizing: border-box;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.signin-input:focus {
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 1px #2563eb;
+}
+
+.signin-input:disabled {
+    background: #f8fafc;
+    cursor: not-allowed;
+}
+
+
+/* =========================================
+   OTP CONTAINER
+   ========================================= */
+
+.otp-container {
+    display: flex;
+    justify-content: center;
+
+    gap: 8px;
+
+    margin-top: 15px;
+}
+
+
+/* =========================================
+   OTP INPUT
+   ========================================= */
+
+.otp-input {
+    width: 44px;
+    height: 48px;
+
+    padding: 0;
+
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+
+    text-align: center;
+
+    font-size: 18px;
+    font-weight: 700;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.otp-input:focus {
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 1px #2563eb;
+}
+
+
+/* =========================================
+   OTP MESSAGE
+   ========================================= */
+
+.otp-message {
+    margin: 11px 0 0;
+
+    font-size: 14px;
+    line-height: 20px;
+
+    color: #64748b;
+}
+
+
+/* =========================================
+   OTP BUTTON
+   ========================================= */
+
+.otp-button {
+    width: 100%;
+    height: 44px;
+
+    margin-top: 30px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: #f97316;
+
+    color: #ffffff;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease;
+}
+
+.otp-button:hover {
+    background: #ea580c;
+}
+
+
+/* =========================================
+   DIVIDER
+   ========================================= */
+
+.signin-divider {
+    display: flex;
+    align-items: center;
+
+    margin: 16px 0;
+}
+
+.signin-divider div {
+    flex: 1;
+
+    height: 1px;
+
+    background: #e2e8f0;
+}
+
+.signin-divider span {
+    padding: 0 8px;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    color: #94a3b8;
+}
+
+
+/* =========================================
+   GOOGLE BUTTON
+   ========================================= */
+
+.google-button {
+    width: 100%;
+    height: 44px;
+
+    display: hidden;
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+
+    background: #ffffff;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease;
+}
+
+.google-button:hover {
+    background: #f8fafc;
+}
+
+.google-button img {
+    width: 20px;
+    height: 20px;
+}
+
+.google-button span {
+    font-size: 18px;
+    font-weight: 600;
+
+    color: #334155;
+}
+
+
+/* =========================================
+   SIGN UP
+   ========================================= */
+
+.signup-text {
+    margin: 16px 0 0;
+
+    text-align: center;
+
+    font-size: 16px;
+
+    color: #475569;
+}
+
+.signup-link {
+    font-weight: 600;
+
+    color: #2563eb;
+
+    text-decoration: none;
+}
+
+.signup-link:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================
+   TERMS
+   ========================================= */
+
+.terms-text {
+    margin: 15px 0 0;
+
+    text-align: center;
+
+    font-size: 14px;
+    line-height: 20px;
+
+    color: #64748b;
+}
+
+.terms-link {
+    font-weight: 500;
+
+    color: #2563eb;
+
+    cursor: pointer;
+}
+
+
+/* =========================================
+   TABLET / SMALL DESKTOP
+   ========================================= */
+
+@media (max-width: 1023px) {
+
+    .signin-illustration {
+        display: none;
+    }
+
+    .signin-background-picture,
+    .signin-background {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center center;
+        filter: none !important;
+        -webkit-filter: none !important;
+    }
+
+    .signin-overlay {
+        display: block;
+        background: linear-gradient(to bottom,
+                rgba(15, 23, 42, 0.12),
+                rgba(15, 23, 42, 0.22));
+    }
+
+    .signin-section {
+        min-height: 100vh;
+    }
+
+    .signin-content {
+        min-height: 100vh;
+
+        margin-top: 0;
+
+        padding: 24px;
+    }
+
+    .signin-container {
+        display: block;
+
+        max-width: 380px;
+    }
+
+    .signin-card {
+        width: 100%;
+        height: auto;
+
+        padding: 24px;
+
+        background: #ffffff;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.25);
+
+        margin-left: 0;
+    }
+
+    .signin-title {
+        font-size: 23px;
+    }
+
+    .signin-description {
+        font-size: 14px;
+    }
+}
+
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 639px) {
+    .signin-content {
+        padding: 16px;
+    }
+
+    .signin-container {
+        max-width: 350px;
+    }
+
+    .signin-card {
+        padding: 20px;
+    }
+
+    .signin-title {
+        font-size: 21px;
+    }
+
+    .signin-description {
+        font-size: 13px;
+    }
+
+    .signin-label {
+        font-size: 12px;
+    }
+
+    .google-button span {
+        font-size: 15px;
+    }
+
+    .signup-text {
+        font-size: 14px;
+    }
+
+    .terms-text {
+        font-size: 12px;
+    }
+}
+
+/* =========================================
+   DYNAMIC INPUT ICON TRANSITION
+   ========================================= */
+
+.input-icon {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    animation: icon-pop-in 0.2s ease;
+}
+
+@keyframes icon-pop-in {
+    from {
+        opacity: 0;
+        transform: translateY(-4px) scale(0.85);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
