@@ -36,7 +36,8 @@ import { getSavedLocation } from "../../services/postOfficeService";
 
 const StickyHeader = () => {
   const [searchName, setSearchName] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(() => Boolean(localStorage.getItem("user") || localStorage.getItem("token")));
+  const [currentUser, setCurrentUser] = useState(() => localStorage.getItem("userName") || localStorage.getItem("user") || "");
   const [quantity, setQuantity] = useState(0);
   const [wishlistQuantity, setWishlistQuantity] = useState(0);
   const [categoriess, setCategoriess] = useState([]);
@@ -77,6 +78,25 @@ const StickyHeader = () => {
     };
     window.addEventListener("locationUpdated", handleLocationUpdate);
     return () => window.removeEventListener("locationUpdated", handleLocationUpdate);
+  }, []);
+
+  // Sync auth state immediately when login or logout happens anywhere in the app
+  useEffect(() => {
+    const handleAuthChange = () => {
+      const token = localStorage.getItem("token");
+      const user = localStorage.getItem("user");
+      const userName = localStorage.getItem("userName");
+      const hasAuth = Boolean(user || token);
+      console.log("[StickyHeader] loginStatusChanged / storage event. User authenticated:", hasAuth, user);
+      setIsLoggedIn(hasAuth);
+      setCurrentUser(userName || user || "");
+    };
+    window.addEventListener("loginStatusChanged", handleAuthChange);
+    window.addEventListener("storage", handleAuthChange);
+    return () => {
+      window.removeEventListener("loginStatusChanged", handleAuthChange);
+      window.removeEventListener("storage", handleAuthChange);
+    };
   }, []);
 
   // Search Autocomplete states
@@ -139,22 +159,35 @@ const StickyHeader = () => {
                 variables: { refreshToken },
                 onCompleted: (rData) => {
                   console.log("[StickyHeader] tokenRefresh response:", rData?.tokenRefresh);
-                  if (!rData?.tokenRefresh?.token) {
-                    console.warn("[StickyHeader] tokenRefresh failed — clearing session and reloading");
-                    localStorage.clear();
-                    setTimeout(() => window.location.reload(false), 1);
-                  } else {
+                  if (rData?.tokenRefresh?.token) {
                     localStorage.setItem("token", rData.tokenRefresh.token);
+                  } else {
+                    console.warn("[StickyHeader] tokenRefresh failed — resetting auth state");
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("refreshToken");
+                    localStorage.removeItem("user");
+                    localStorage.removeItem("isLoggedIn");
+                    setIsLoggedIn(false);
+                    window.dispatchEvent(new Event("loginStatusChanged"));
                   }
                 },
                 onError: (err) => {
                   console.error("[StickyHeader] tokenRefresh error:", err);
+                  localStorage.removeItem("token");
+                  localStorage.removeItem("refreshToken");
+                  localStorage.removeItem("user");
+                  localStorage.removeItem("isLoggedIn");
+                  setIsLoggedIn(false);
+                  window.dispatchEvent(new Event("loginStatusChanged"));
                 }
               });
             } else {
-              console.warn("[StickyHeader] No refreshToken found, clearing session");
-              localStorage.clear();
-              setTimeout(() => window.location.reload(false), 1);
+              console.warn("[StickyHeader] No refreshToken found, resetting auth state");
+              localStorage.removeItem("token");
+              localStorage.removeItem("user");
+              localStorage.removeItem("isLoggedIn");
+              setIsLoggedIn(false);
+              window.dispatchEvent(new Event("loginStatusChanged"));
             }
           }
         },
@@ -208,12 +241,15 @@ const StickyHeader = () => {
   }, []);
 
   // Live Saleor Categories Query
-  const { data: categoriesData } = useQuery(GET_CATEGORIES_SUBLIST, {
+  const { data: categoriesData, error: categoriesError } = useQuery(GET_CATEGORIES_SUBLIST, {
     fetchPolicy: "cache-first",
     variables: { first: 15, level: 0 },
   });
 
   useEffect(() => {
+    if (categoriesError) {
+      console.error("[StickyHeader] categoriesError (GET_CATEGORIES_SUBLIST):", categoriesError);
+    }
     if (categoriesData?.categories?.edges) {
       // Clean up empty subcategories and parent categories with 0 products directly at ingestion
       const cleanedEdges = categoriesData.categories.edges
@@ -250,7 +286,7 @@ const StickyHeader = () => {
         setActiveCategory(cleanedEdges[0].node);
       }
     }
-  }, [categoriesData]);
+  }, [categoriesData, categoriesError]);
 
   // Fetch top brands
   const { data: topBrandsData } = useQuery(GET_TOP_BRANDS, {
@@ -369,7 +405,7 @@ const StickyHeader = () => {
     variables: {
       first: 5,
       channel: "default-channel",
-      sortBy: { direction: "ASC", field: "PRIORITY" },
+      sortBy: { direction: "ASC", field: "NAME" },
       filter: { search: searchName }
     },
   });
@@ -774,7 +810,7 @@ const StickyHeader = () => {
                           className="w-10 h-10 object-contain"
                         />
                         <span className="text-[14px] font-semibold max-w-[80px] truncate text-slate-700" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                          {username === " " || !username ? (localStorage.getItem("email") || "Profile").substring(0, 8) : username.substring(0, 8)}
+                          {(currentUser && currentUser.trim()) ? currentUser.substring(0, 8) : ((username && username.trim()) ? username.substring(0, 8) : (localStorage.getItem("email") || "Profile").substring(0, 8))}
                         </span>
                       </button>
 
@@ -783,7 +819,7 @@ const StickyHeader = () => {
                           <div className="px-5 py-3.5 border-b border-slate-100 text-xs text-slate-500 bg-slate-50/70">
                             <span className="text-slate-500 font-medium tracking-wide uppercase text-[11px]">Logged in as</span>
                             <div className="text-slate-800 font-extrabold text-sm sm:text-[15px] mt-1 break-words text-wrap leading-snug" style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}>
-                              {localStorage.getItem("email") || username}
+                              {currentUser || localStorage.getItem("email") || username}
                             </div>
                           </div>
                           <div className="py-1">
@@ -984,7 +1020,7 @@ const StickyHeader = () => {
                       <div className="px-5 py-3.5 border-b border-slate-100 text-xs text-slate-500 bg-slate-50/70">
                         <span className="text-slate-500 font-medium tracking-wide uppercase text-[11px]">Logged in as</span>
                         <div className="text-slate-800 font-extrabold text-sm mt-1 break-words text-wrap leading-snug" style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}>
-                          {localStorage.getItem("email") || username}
+                          {currentUser || localStorage.getItem("email") || username}
                         </div>
                       </div>
                       <div className="py-1">

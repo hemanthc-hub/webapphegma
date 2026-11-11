@@ -68,6 +68,13 @@ export const TopCategories: React.FC<TopCategoriesProps> = ({ className = "" }) 
     fetchPolicy: "cache-and-network"
   });
 
+  if (error) {
+    console.error("[TopCategories] GET_TOP_CATEGORIES error:", error);
+  }
+  if (data?.categories?.edges) {
+    console.log("[TopCategories] GET_TOP_CATEGORIES loaded:", data.categories.edges.length, "categories");
+  }
+
   const categories: CategoryNode[] = data?.categories?.edges?.map(edge => edge.node) || [];
 
   const scroll = (dir: "left" | "right") => {

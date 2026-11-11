@@ -435,7 +435,7 @@ const ProductSearchScreen = () => {
 			channel: "default-channel",
 			sortBy: {
 				direction: directionSort ? DirectionEnum.DESC : DirectionEnum.ASC,
-				field: fieldSort ? FieldEnum.RATING : fieldSort1 ? FieldEnum.PRICE : fieldSort2 ? FieldEnum.PUBLICATION_DATE : FieldEnum.PRIORITY
+				field: fieldSort ? FieldEnum.RATING : fieldSort1 ? FieldEnum.PRICE : fieldSort2 ? FieldEnum.PUBLICATION_DATE : FieldEnum.NAME
 			},
 			filter: {
 				collections: collectionSearchField && collectionId ? [collectionId] : [],

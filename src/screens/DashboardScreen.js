@@ -4,6 +4,7 @@ import Footer from "../components/Footer/Footer";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { SAVED_ADDRESSES, SAVED_ORDERS, GET_PRODUCT_LIST } from "../GraphQL/Queries";
 import { useQuery, useMutation } from "@apollo/client/react";
+import axios from "axios";
 import {
   CREATE_ADDRESS_MUTATION,
   UPDATE_ADDRESS_MUTATION,
@@ -11,7 +12,9 @@ import {
   ACCOUNT_SET_DEFAULT_ADDRESS,
   PASSWORD_CHANGE_MUTATION,
   CREATE_CHECKOUT_MUTATION,
-  CHECKOUT_ADD_PRODUCT_LINE_MUTATION
+  CHECKOUT_ADD_PRODUCT_LINE_MUTATION,
+  ACCOUNT_UPDATE_MUTATION,
+  METADATA_UPDATE
 } from "../GraphQL/Mutation";
 import { Helmet } from "react-helmet-async";
 import { toast } from "sonner";
@@ -106,44 +109,14 @@ export default function DashboardScreen() {
   };
 
   // Mobile Profile Form fields (matching Image 3)
-  const [mobFullName, setMobFullName] = useState(() => localStorage.getItem("userName") || localStorage.getItem("user") || "Dr. Hemanth");
+  const [mobFullName, setMobFullName] = useState(() => localStorage.getItem("userName") || localStorage.getItem("user") || "");
   const [mobUserType, setMobUserType] = useState(() => localStorage.getItem("userType") || "Doctor");
   const [mobSpeciality, setMobSpeciality] = useState(() => localStorage.getItem("speciality") || "Dental Surgeon");
   const [mobGender, setMobGender] = useState(() => localStorage.getItem("gender") || "Male");
-  const [mobBusiness, setMobBusiness] = useState(() => localStorage.getItem("business") || "City Healthcare Clinic");
-  const [mobMobile, setMobMobile] = useState(() => localStorage.getItem("userPhone") || "9876543210");
-  const [mobKpmeNo, setMobKpmeNo] = useState(() => localStorage.getItem("kpmeNo") || "KA-KPME-48291");
-  const [mobEmail, setMobEmail] = useState(() => localStorage.getItem("email") || localStorage.getItem("userEmail") || "hemanth@gmail.com");
-
-  const handleSaveMobileProfile = (e) => {
-    if (e) e.preventDefault();
-    console.log("[Dashboard Mobile Profile] Saving profile changes:", {
-      mobFullName,
-      mobUserType,
-      mobSpeciality,
-      mobGender,
-      mobBusiness,
-      mobMobile,
-      mobKpmeNo,
-      mobEmail
-    });
-    localStorage.setItem("userName", mobFullName);
-    localStorage.setItem("user", mobFullName);
-    localStorage.setItem("userType", mobUserType);
-    localStorage.setItem("speciality", mobSpeciality);
-    localStorage.setItem("gender", mobGender);
-    localStorage.setItem("business", mobBusiness);
-    localStorage.setItem("userPhone", mobMobile);
-    localStorage.setItem("kpmeNo", mobKpmeNo);
-    localStorage.setItem("email", mobEmail);
-    localStorage.setItem("userEmail", mobEmail);
-
-    window.dispatchEvent(new Event("loginStatusChanged"));
-    window.dispatchEvent(new Event("storage"));
-    toast.success("Profile Information updated successfully!");
-    setMobileProfileEditing(false);
-    console.log("[Dashboard Mobile Profile] Successfully saved. Fields are now BLOCKED (mobileProfileEditing: false).");
-  };
+  const [mobBusiness, setMobBusiness] = useState(() => localStorage.getItem("business") || "");
+  const [mobMobile, setMobMobile] = useState(() => localStorage.getItem("userPhone") || "");
+  const [mobKpmeNo, setMobKpmeNo] = useState(() => localStorage.getItem("kpmeNo") || "");
+  const [mobEmail, setMobEmail] = useState(() => localStorage.getItem("email") || localStorage.getItem("userEmail") || "");
 
   // Address Modal / Form state
   const [addressModalOpen, setAddressModalOpen] = useState(false);
@@ -277,6 +250,157 @@ export default function DashboardScreen() {
   });
   const [CreateCheckout] = useMutation(CREATE_CHECKOUT_MUTATION);
   const [addLineCheckout] = useMutation(CHECKOUT_ADD_PRODUCT_LINE_MUTATION);
+  const [accountUpdateM] = useMutation(ACCOUNT_UPDATE_MUTATION, {
+    context: { headers: { Authorization: "JWT " + localStorage.getItem("token") } },
+  });
+  const [updateMetadataM] = useMutation(METADATA_UPDATE, {
+    context: { headers: { Authorization: "JWT " + localStorage.getItem("token") } },
+  });
+
+  // Populate mobile profile form state reactively from database (addressData.me and metadata)
+  useEffect(() => {
+    if (addressData?.me) {
+      const me = addressData.me;
+      const meta = {};
+      if (Array.isArray(me.metadata)) {
+        me.metadata.forEach((item) => {
+          if (item?.key) meta[item.key] = item.value;
+        });
+      }
+      console.log("[Dashboard Mobile Profile] Loaded user profile & metadata from database:", {
+        email: me.email,
+        firstName: me.firstName,
+        lastName: me.lastName,
+        metadata: meta
+      });
+
+      const fullName = [me.firstName, me.lastName].filter(Boolean).join(" ");
+      if (fullName) {
+        setMobFullName(fullName);
+        localStorage.setItem("userName", fullName);
+        localStorage.setItem("user", fullName);
+      }
+      if (me.email) {
+        setMobEmail(me.email);
+        localStorage.setItem("email", me.email);
+        localStorage.setItem("userEmail", me.email);
+      }
+      if (meta.userType) {
+        setMobUserType(meta.userType);
+        localStorage.setItem("userType", meta.userType);
+      }
+      if (meta.speciality) {
+        setMobSpeciality(meta.speciality);
+        localStorage.setItem("speciality", meta.speciality);
+      }
+      if (meta.gender) {
+        setMobGender(meta.gender);
+        localStorage.setItem("gender", meta.gender);
+      }
+      const biz = meta.business || meta.clinic;
+      if (biz) {
+        setMobBusiness(biz);
+        localStorage.setItem("business", biz);
+      }
+      if (meta.kpmeNo) {
+        setMobKpmeNo(meta.kpmeNo);
+        localStorage.setItem("kpmeNo", meta.kpmeNo);
+      }
+      const ph = meta.mobile || meta.mobileNo;
+      if (ph) {
+        setMobMobile(ph);
+        localStorage.setItem("userPhone", ph);
+      }
+    }
+  }, [addressData]);
+
+  const handleSaveMobileProfile = (e) => {
+    if (e) e.preventDefault();
+    console.log("[Dashboard Mobile Profile] Saving profile changes:", {
+      mobFullName,
+      mobUserType,
+      mobSpeciality,
+      mobGender,
+      mobBusiness,
+      mobMobile,
+      mobKpmeNo,
+      mobEmail
+    });
+    localStorage.setItem("userName", mobFullName);
+    localStorage.setItem("user", mobFullName);
+    localStorage.setItem("userType", mobUserType);
+    localStorage.setItem("speciality", mobSpeciality);
+    localStorage.setItem("gender", mobGender);
+    localStorage.setItem("business", mobBusiness);
+    localStorage.setItem("userPhone", mobMobile);
+    localStorage.setItem("kpmeNo", mobKpmeNo);
+    localStorage.setItem("email", mobEmail);
+    localStorage.setItem("userEmail", mobEmail);
+
+    const token = localStorage.getItem("token");
+    if (token) {
+      const parts = mobFullName.trim().split(" ");
+      const firstName = parts[0] || mobFullName;
+      const lastName = parts.slice(1).join(" ") || "";
+
+      // 1. Update basic account fields in Saleor
+      accountUpdateM({
+        variables: { input: { firstName, lastName } }
+      })
+        .then((res) => console.log("[Dashboard Mobile Profile] Saleor accountUpdate response:", res))
+        .catch((err) => console.warn("[Dashboard Mobile Profile] Account update mutation error:", err));
+
+      // 2. Update user metadata in Saleor database (persists in dev_hegma account_user.metadata)
+      if (addressData?.me?.id) {
+        const metadataInput = [
+          { key: "userType", value: String(mobUserType || "") },
+          { key: "speciality", value: String(mobSpeciality || "") },
+          { key: "gender", value: String(mobGender || "") },
+          { key: "business", value: String(mobBusiness || "") },
+          { key: "kpmeNo", value: String(mobKpmeNo || "") },
+          { key: "mobile", value: String(mobMobile || "") }
+        ];
+        console.log("[Dashboard Mobile Profile] Saving metadata to database via GraphQL updateMetadata:", {
+          id: addressData.me.id,
+          input: metadataInput
+        });
+        updateMetadataM({
+          variables: {
+            id: addressData.me.id,
+            input: metadataInput
+          }
+        })
+          .then((res) => console.log("[Dashboard Mobile Profile] updateMetadata persisted to database successfully:", res))
+          .catch((err) => console.error("[Dashboard Mobile Profile] updateMetadata database error:", err));
+      }
+
+      // 3. Update database via Microservice REST API (updates account_user.mobile_no and metadata)
+      const restApiUrl = process.env.REACT_APP_REST_API_URL || window.location.origin;
+      axios.post(`${restApiUrl}/api/v1/updateUserDetails`, {
+        token: token,
+        email: mobEmail,
+        mobile: mobMobile,
+        first_name: firstName,
+        last_name: lastName,
+        metadata: {
+          userType: mobUserType,
+          speciality: mobSpeciality,
+          gender: mobGender,
+          business: mobBusiness,
+          kpmeNo: mobKpmeNo,
+          mobile: mobMobile
+        }
+      })
+        .then((res) => console.log("[Dashboard Mobile Profile] REST updateUserDetails database result:", res.data))
+        .catch((err) => console.warn("[Dashboard Mobile Profile] REST updateUserDetails call error:", err));
+    }
+
+    window.dispatchEvent(new Event("loginStatusChanged"));
+    window.dispatchEvent(new Event("storage"));
+    toast.success("Profile Information updated successfully!");
+    setMobileProfileEditing(false);
+    console.log("[Dashboard Mobile Profile] Successfully saved. Fields are now BLOCKED (mobileProfileEditing: false).");
+  };
 
   // Default address ID state
   const [defaultAddressId, setDefaultAddressId] = useState(() => localStorage.getItem("defaultAddressId") || "");

@@ -253,21 +253,28 @@ const handleVerifyNudgeOtp = (e) => {
   }
 
   // Note: setProductBannerList handled inline below for banner channel
-  const { data: homeBannerData } = useQuery(GET_COLLECTION_LIST, {
+  const { data: homeBannerData, error: homeBannerError } = useQuery(GET_COLLECTION_LIST, {
     fetchPolicy: "cache-and-network",
-    variables: { first: 20, channel: "home-banner", sortBy: { field: "PRIORITY", direction: "ASC" } },
+    variables: { first: 20, channel: "home-banner", sortBy: { field: "NAME", direction: "ASC" } },
   });
   useEffect(() => {
+    if (homeBannerError) {
+      console.error("[HomeScreen] homeBannerError (GET_COLLECTION_LIST):", homeBannerError);
+    }
     if (homeBannerData?.collections?.edges?.[0]?.node?.products?.edges) {
       setProductBannerList(homeBannerData.collections.edges[0].node.products.edges);
+      console.log("[HomeScreen] homeBannerData loaded:", homeBannerData.collections.edges[0].node.products.edges);
     }
-  }, [homeBannerData]);
+  }, [homeBannerData, homeBannerError]);
 
-  const { refetch: refetch2, data: homeProductData } = useQuery(GET_HOME_COLLECTIONS_WITH_PRODUCTS, {
+  const { refetch: refetch2, data: homeProductData, error: homeProductError } = useQuery(GET_HOME_COLLECTIONS_WITH_PRODUCTS, {
     fetchPolicy: "cache-and-network",
-    variables: { first: 25, channel: "default-channel", sortBy: { field: "PRIORITY", direction: "ASC" } },
+    variables: { first: 25, channel: "default-channel", sortBy: { field: "NAME", direction: "ASC" } },
   });
   useEffect(() => {
+    if (homeProductError) {
+      console.error("[HomeScreen] homeProductError (GET_HOME_COLLECTIONS_WITH_PRODUCTS):", homeProductError);
+    }
     if (homeProductData?.collections?.edges) {
       const allEdges = homeProductData.collections.edges;
       // Build a unified pool of unique catalog products across all retrieved collections
@@ -342,16 +349,19 @@ const handleVerifyNudgeOtp = (e) => {
     }
   }, [homeProductData]);
 
-  const { refetch: refetch1, data: homeBannerCollectionData } = useQuery(GET_COLLECTION_LIST, {
+  const { refetch: refetch1, data: homeBannerCollectionData, error: homeBannerCollectionError } = useQuery(GET_COLLECTION_LIST, {
     fetchPolicy: "cache-and-network",
-    variables: { first: 20, channel: "home-collection", sortBy: { field: "PRIORITY", direction: "ASC" } },
+    variables: { first: 20, channel: "home-collection", sortBy: { field: "NAME", direction: "ASC" } },
   });
   useEffect(() => {
+    if (homeBannerCollectionError) {
+      console.error("[HomeScreen] homeBannerCollectionError (GET_COLLECTION_LIST):", homeBannerCollectionError);
+    }
     if (homeBannerCollectionData?.collections?.edges) {
       setBannerList(homeBannerCollectionData.collections.edges);
       console.log("Home Banner Collection Data Query Result (GET_COLLECTION_LIST):", homeBannerCollectionData.collections.edges);
     }
-  }, [homeBannerCollectionData]);
+  }, [homeBannerCollectionData, homeBannerCollectionError]);
 
   const onAddToWishlist = (e) => {
     const { id } = e.target;

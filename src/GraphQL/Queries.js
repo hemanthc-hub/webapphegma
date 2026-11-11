@@ -65,7 +65,6 @@ query ProductList(
         name
         slug
         description
-        codAvailable
         rating
         media{
           url 
@@ -114,8 +113,6 @@ query ProductList(
           id
           name
           quantityAvailable
-          weightedShipping
-          originalPrice
           pricing{ 
             price{
               net{
@@ -230,38 +227,38 @@ query FilterList(
 }
 `
 export const GET_CATEGORIES_SUBLIST = gql`
-{
-  categories(first: 20, level:0) {
-    edges {
-      node {
-        id
-        name
-        slug
-        description
-        products(channel: "default-channel") {
-          totalCount
-        }
-        children(first: 20) {
-          edges {
-            node {
-              id
-              name
-              slug
-              products(channel: "default-channel") {
-                totalCount
+  query CategoriesSublist($first: Int = 20, $level: Int = 0) {
+    categories(first: $first, level: $level) {
+      edges {
+        node {
+          id
+          name
+          slug
+          description
+          products(channel: "default-channel") {
+            totalCount
+          }
+          children(first: 20) {
+            edges {
+              node {
+                id
+                name
+                slug
+                products(channel: "default-channel") {
+                  totalCount
+                }
               }
             }
           }
-        }
-        backgroundImage {
-          url
-          alt
+          backgroundImage {
+            url
+            alt
+          }
         }
       }
     }
   }
-}
-`
+`;
 
 export const GET_COLLECTION_LIST = gql`
   query CollectionList(
@@ -270,7 +267,7 @@ export const GET_COLLECTION_LIST = gql`
     $last: Int
     $before: String
     $filter: CollectionFilterInput
-    $sort: CollectionSortingInput
+    $sortBy: CollectionSortingInput
     $channel: String
   ) {
     collections(
@@ -279,7 +276,7 @@ export const GET_COLLECTION_LIST = gql`
       before: $before
       last: $last
       filter: $filter
-      sortBy: $sort
+      sortBy: $sortBy
       channel: $channel
     ) {
       edges {
@@ -324,8 +321,6 @@ export const GET_COLLECTION_LIST = gql`
                   url
                 }
                 variants{
-                  originalPrice
-                  weightedShipping
                   id
                   name
                   quantityAvailable
@@ -658,10 +653,14 @@ export const GET_ATTRIBUTE_LIST = gql`
 export const SAVED_ADDRESSES = gql`
 query Saved_Addresses{
   me {
-firstName
-lastName
-email
-mobileNo
+    id
+    firstName
+    lastName
+    email
+    metadata {
+      key
+      value
+    }
     addresses {
       id
       city
@@ -917,7 +916,7 @@ export const GET_HOME_COLLECTIONS_WITH_PRODUCTS = gql`
     $last: Int
     $before: String
     $filter: CollectionFilterInput
-    $sort: CollectionSortingInput
+    $sortBy: CollectionSortingInput
     $channel: String
   ) {
     collections(
@@ -926,7 +925,7 @@ export const GET_HOME_COLLECTIONS_WITH_PRODUCTS = gql`
       before: $before
       last: $last
       filter: $filter
-      sortBy: $sort
+      sortBy: $sortBy
       channel: $channel
     ) {
       edges {
@@ -987,8 +986,6 @@ export const GET_HOME_COLLECTIONS_WITH_PRODUCTS = gql`
                 variants {
                   id
                   name
-                  originalPrice
-                  weightedShipping
                   quantityAvailable
                   pricing {
                     price {

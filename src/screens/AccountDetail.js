@@ -4,8 +4,9 @@ import { Helmet } from "react-helmet-async";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import { useQuery, useMutation } from "@apollo/client/react";
+import axios from "axios";
 import { SAVED_ADDRESSES, SAVED_ORDERS } from "../GraphQL/Queries";
-import { ACCOUNT_UPDATE_MUTATION } from "../GraphQL/Mutation";
+import { ACCOUNT_UPDATE_MUTATION, METADATA_UPDATE } from "../GraphQL/Mutation";
 import {
   User,
   MapPin,
@@ -96,8 +97,12 @@ const AccountDetail = ({
     navigate("/login");
   };
 
-  // GraphQL Mutation
+  // GraphQL Mutations
   const [accountUpdateM] = useMutation(ACCOUNT_UPDATE_MUTATION, {
+    context: { headers: { Authorization: "JWT " + localStorage.getItem("token") } },
+  });
+
+  const [updateMetadataM] = useMutation(METADATA_UPDATE, {
     context: { headers: { Authorization: "JWT " + localStorage.getItem("token") } },
   });
 
@@ -111,6 +116,63 @@ const AccountDetail = ({
     context: { headers: { Authorization: "JWT " + localStorage.getItem("token") } },
     fetchPolicy: "cache-and-network"
   });
+
+  // Populate state reactively from database (addressData.me and metadata)
+  React.useEffect(() => {
+    if (addressData?.me) {
+      const me = addressData.me;
+      const meta = {};
+      if (Array.isArray(me.metadata)) {
+        me.metadata.forEach((item) => {
+          if (item?.key) meta[item.key] = item.value;
+        });
+      }
+      console.log("[AccountDetail] Loaded user profile & metadata from database:", {
+        email: me.email,
+        firstName: me.firstName,
+        lastName: me.lastName,
+        metadata: meta
+      });
+
+      const fullName = [me.firstName, me.lastName].filter(Boolean).join(" ");
+      if (fullName) {
+        setLocalFullName(fullName);
+        localStorage.setItem("userName", fullName);
+        localStorage.setItem("user", fullName);
+      }
+      if (me.email) {
+        setUserEmail(me.email);
+        localStorage.setItem("email", me.email);
+        localStorage.setItem("userEmail", me.email);
+      }
+      if (meta.userType) {
+        setLocalUserType(meta.userType);
+        localStorage.setItem("userType", meta.userType);
+      }
+      if (meta.speciality) {
+        setLocalSpeciality(meta.speciality);
+        localStorage.setItem("speciality", meta.speciality);
+      }
+      if (meta.gender) {
+        setGender(meta.gender);
+        localStorage.setItem("gender", meta.gender);
+      }
+      const biz = meta.business || meta.clinic;
+      if (biz) {
+        setBusiness(biz);
+        localStorage.setItem("business", biz);
+      }
+      if (meta.kpmeNo) {
+        setKpmeNo(meta.kpmeNo);
+        localStorage.setItem("kpmeNo", meta.kpmeNo);
+      }
+      const ph = meta.mobile || meta.mobileNo;
+      if (ph) {
+        setMobile(ph);
+        localStorage.setItem("userPhone", ph);
+      }
+    }
+  }, [addressData]);
 
   // Local fallback saved addresses
   const getLocalAddresses = () => {
@@ -212,13 +274,62 @@ const AccountDetail = ({
     localStorage.setItem("email", userEmail);
     localStorage.setItem("userEmail", userEmail);
 
-    if (localStorage.getItem("token")) {
+    const token = localStorage.getItem("token");
+    if (token) {
       const parts = localFullName.trim().split(" ");
       const firstName = parts[0] || localFullName;
       const lastName = parts.slice(1).join(" ") || "";
+
+      // 1. Update basic account fields in Saleor
       accountUpdateM({
         variables: { input: { firstName, lastName } }
-      }).catch((err) => console.warn("[AccountDetail] Account update mutation error:", err));
+      })
+        .then((res) => console.log("[AccountDetail] Saleor accountUpdate response:", res))
+        .catch((err) => console.warn("[AccountDetail] Account update mutation error:", err));
+
+      // 2. Update user metadata in Saleor database (persists in dev_hegma account_user.metadata)
+      if (addressData?.me?.id) {
+        const metadataInput = [
+          { key: "userType", value: String(localUserType || "") },
+          { key: "speciality", value: String(localSpeciality || "") },
+          { key: "gender", value: String(gender || "") },
+          { key: "business", value: String(business || "") },
+          { key: "kpmeNo", value: String(kpmeNo || "") },
+          { key: "mobile", value: String(mobile || "") }
+        ];
+        console.log("[AccountDetail] Saving metadata to database via GraphQL updateMetadata:", {
+          id: addressData.me.id,
+          input: metadataInput
+        });
+        updateMetadataM({
+          variables: {
+            id: addressData.me.id,
+            input: metadataInput
+          }
+        })
+          .then((res) => console.log("[AccountDetail] updateMetadata persisted to database successfully:", res))
+          .catch((err) => console.error("[AccountDetail] updateMetadata database error:", err));
+      }
+
+      // 3. Update database via Microservice REST API (updates account_user.mobile_no and metadata)
+      const restApiUrl = process.env.REACT_APP_REST_API_URL || window.location.origin;
+      axios.post(`${restApiUrl}/api/v1/updateUserDetails`, {
+        token: token,
+        email: userEmail,
+        mobile: mobile,
+        first_name: firstName,
+        last_name: lastName,
+        metadata: {
+          userType: localUserType,
+          speciality: localSpeciality,
+          gender: gender,
+          business: business,
+          kpmeNo: kpmeNo,
+          mobile: mobile
+        }
+      })
+        .then((res) => console.log("[AccountDetail] REST updateUserDetails database result:", res.data))
+        .catch((err) => console.warn("[AccountDetail] REST updateUserDetails call error:", err));
     }
 
     window.dispatchEvent(new Event("loginStatusChanged"));

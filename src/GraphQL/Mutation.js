@@ -80,7 +80,7 @@ mutation CheckoutAddProductLine(
 }
 `;
 
-export const CHECKOUT_LINE_DELETE= gql`
+export const CHECKOUT_LINE_DELETE = gql`
 mutation CheckoutLineDelete(
 $token:UUID!, $lineId:ID! 
 ) {
@@ -99,7 +99,7 @@ $token:UUID!, $lineId:ID!
 }
 `;
 
-export const CHECKOUT_LINE_UPDATE= gql`
+export const CHECKOUT_LINE_UPDATE = gql`
 mutation CheckoutLineUpdate(
   $token: UUID
   $lines: [CheckoutLineUpdateInput!]!
@@ -116,30 +116,67 @@ mutation CheckoutLineUpdate(
 `;
 
 export const CREATE_ADDRESS_MUTATION = gql`
-  mutation accountAddressCreate( $input:AddressInput! ) {
+  mutation accountAddressCreate($input: AddressInput!) {
     accountAddressCreate(input: $input) {
       errors {
+        field
         message
+        code
       }
-      address{
+      address {
+        id
+        city
+        cityArea
+        phone
         firstName
+        lastName
+        postalCode
+        countryArea
+        country {
+          country
+          code
+        }
+        companyName
+        streetAddress1
+        streetAddress2
+        isDefaultShippingAddress
+        isDefaultBillingAddress
       }
     }
   }
 `;
 
 export const UPDATE_ADDRESS_MUTATION = gql`
-  mutation accountAddressUpdate($id:ID!, $input:AddressInput! ) {
+  mutation accountAddressUpdate($id: ID!, $input: AddressInput!) {
     accountAddressUpdate(id: $id, input: $input) {
       errors {
+        field
         message
+        code
       }
-      address{
+      address {
+        id
+        city
+        cityArea
+        phone
         firstName
+        lastName
+        postalCode
+        countryArea
+        country {
+          country
+          code
+        }
+        companyName
+        streetAddress1
+        streetAddress2
+        isDefaultShippingAddress
+        isDefaultBillingAddress
       }
     }
   }
 `;
+
 
 export const UPDATE_WISHLIST_MUTATION = gql`
   mutation accountUpdate( $input:AccountInput! ) {
@@ -154,7 +191,7 @@ export const UPDATE_WISHLIST_MUTATION = gql`
   }
 `;
 
-export const CHECKOUT_ADD_PROMO_CODE= gql`
+export const CHECKOUT_ADD_PROMO_CODE = gql`
 mutation checkoutAddPromoCode($token: UUID!, $promoCode: String!) {
   checkoutAddPromoCode(token: $token, promoCode: $promoCode) {
     checkout {
@@ -169,7 +206,7 @@ mutation checkoutAddPromoCode($token: UUID!, $promoCode: String!) {
 }
 `;
 
-export const CHECKOUT_REMOVE_PROMO_CODE= gql`
+export const CHECKOUT_REMOVE_PROMO_CODE = gql`
 mutation checkoutRemovePromoCode($token: UUID!, $promoCode: String!) {
   checkoutRemovePromoCode(token: $token, promoCode: $promoCode) {
     checkout {
@@ -184,32 +221,48 @@ mutation checkoutRemovePromoCode($token: UUID!, $promoCode: String!) {
 }
 `;
 
-export const ACCOUNT_ADDRESS_DELETE=gql`
-mutation accountAddressDelete($id:ID!){
-  accountAddressDelete(id: $id) {
-    errors {
-      message
-      code
+export const ACCOUNT_ADDRESS_DELETE = gql`
+  mutation accountAddressDelete($id: ID!) {
+    accountAddressDelete(id: $id) {
+      errors {
+        field
+        message
+        code
+      }
+      address {
+        id
+      }
     }
   }
-}
 `;
 
 export const ACCOUNT_SET_DEFAULT_ADDRESS = gql`
-mutation accountSetDefaultAddress($id: ID!, $type: AddressTypeEnum!) {
-  accountSetDefaultAddress(id: $id, type: $type) {
-    user {
-      id
-    }
-    errors {
-      message
-      code
+  mutation accountSetDefaultAddress($id: ID!, $type: AddressTypeEnum!) {
+    accountSetDefaultAddress(id: $id, type: $type) {
+      user {
+        id
+        defaultShippingAddress {
+          id
+        }
+        defaultBillingAddress {
+          id
+        }
+        addresses {
+          id
+          isDefaultShippingAddress
+          isDefaultBillingAddress
+        }
+      }
+      errors {
+        field
+        message
+        code
+      }
     }
   }
-}
 `;
 
-export const CHECKOUT_PAYMENT_CREATE=gql`
+export const CHECKOUT_PAYMENT_CREATE = gql`
 mutation checkoutPaymentCreate($token: UUID!, $input: PaymentInput!) {
   checkoutPaymentCreate(token: $token, input: $input) {
     payment {
@@ -231,7 +284,7 @@ mutation checkoutPaymentCreate($token: UUID!, $input: PaymentInput!) {
 }
 `;
 
-export const PASSWORD_CHANGE_MUTATION= gql`
+export const PASSWORD_CHANGE_MUTATION = gql`
 mutation passwordChange($oldPassword:String!,$newPassword:String! ){
   passwordChange(oldPassword:$oldPassword, newPassword: $newPassword) {
     errors {
@@ -242,7 +295,7 @@ mutation passwordChange($oldPassword:String!,$newPassword:String! ){
 }
 `;
 
-export const ACCOUNT_UPDATE_MUTATION= gql`
+export const ACCOUNT_UPDATE_MUTATION = gql`
 mutation accountUpdate($input:AccountInput!){
   accountUpdate(input: $input) {
     user{
@@ -257,7 +310,7 @@ mutation accountUpdate($input:AccountInput!){
 }
 `;
 
-export const CHECKOUT_EMAIL_UPDATE=gql`
+export const CHECKOUT_EMAIL_UPDATE = gql`
 mutation CheckoutEmailUpdate($token: UUID!, $email: String!) {
   checkoutEmailUpdate(email: $email, token: $token) {
     checkout{
@@ -276,7 +329,7 @@ mutation CheckoutEmailUpdate($token: UUID!, $email: String!) {
 }
 `;
 
-export const CHECKOUT_BILLING_ADDRESS_UPDATE=gql`
+export const CHECKOUT_BILLING_ADDRESS_UPDATE = gql`
 mutation CheckoutBillingAddressUpdate(
   $token: UUID!
   $billingAddress: AddressInput!
@@ -294,7 +347,7 @@ mutation CheckoutBillingAddressUpdate(
 }
 `;
 
-export const CHECKOUT_SHIPPING_ADDRESS_UPDATE=gql`
+export const CHECKOUT_SHIPPING_ADDRESS_UPDATE = gql`
 mutation CheckoutShippingAddressUpdate(
   $token: UUID!
   $shippingAddress: AddressInput!
@@ -315,7 +368,7 @@ mutation CheckoutShippingAddressUpdate(
 }
 `;
 
-export const CHECKOUT_DELIEVERY_METHOD_UPDATE=gql`
+export const CHECKOUT_DELIEVERY_METHOD_UPDATE = gql`
 mutation checkoutDeliveryMethodUpdate(
   $token: UUID!
   $deliveryMethodId: ID!
@@ -333,7 +386,7 @@ mutation checkoutDeliveryMethodUpdate(
 }
 `;
 
-export const METADATA_UPDATE=gql`
+export const METADATA_UPDATE = gql`
 mutation updateMetadata(
   $id: ID!
   $input: [MetadataInput!]!
@@ -342,6 +395,7 @@ mutation updateMetadata(
     item{
       metadata{
         key
+        value
       }
     }
     errors {
@@ -352,7 +406,7 @@ mutation updateMetadata(
 }
 `;
 
-export const CHECKOUT_CUSTOMER_ATTACH=gql`
+export const CHECKOUT_CUSTOMER_ATTACH = gql`
 mutation checkoutCustomerAttach(
   $token: UUID!
 ) {

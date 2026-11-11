@@ -1080,7 +1080,7 @@ const handleMobileQuantityChange = (newQty) => {
     variables: {
       first: 8,
       channel: "default-channel",
-      sortBy: { direction: "ASC", field: "PRIORITY" },
+      sortBy: { direction: "ASC", field: "NAME" },
       filter: { search: searchQuery.trim() },
     },
   });
