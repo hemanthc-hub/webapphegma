@@ -36,7 +36,7 @@ import { getSavedLocation } from "../../services/postOfficeService";
 
 const StickyHeader = () => {
   const [searchName, setSearchName] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(() => Boolean(localStorage.getItem("user") || localStorage.getItem("token")));
+  const [isLoggedIn, setIsLoggedIn] = useState(() => Boolean(localStorage.getItem("user") || localStorage.getItem("userName") || localStorage.getItem("token") || localStorage.getItem("isLoggedIn") === "true"));
   const [currentUser, setCurrentUser] = useState(() => localStorage.getItem("userName") || localStorage.getItem("user") || "");
   const [quantity, setQuantity] = useState(0);
   const [wishlistQuantity, setWishlistQuantity] = useState(0);
@@ -86,8 +86,8 @@ const StickyHeader = () => {
       const token = localStorage.getItem("token");
       const user = localStorage.getItem("user");
       const userName = localStorage.getItem("userName");
-      const hasAuth = Boolean(user || token);
-      console.log("[StickyHeader] loginStatusChanged / storage event. User authenticated:", hasAuth, user);
+      const hasAuth = Boolean(user || userName || token || localStorage.getItem("isLoggedIn") === "true");
+      console.log("[StickyHeader] loginStatusChanged / storage event. User authenticated:", hasAuth, userName || user);
       setIsLoggedIn(hasAuth);
       setCurrentUser(userName || user || "");
     };
@@ -145,56 +145,42 @@ const StickyHeader = () => {
     }
 
     let cemail = "guest@hegmakart.com";
-    if (loggedInUser) {
+    if (loggedInUser || localStorage.getItem("userName") || localStorage.getItem("token")) {
       setIsLoggedIn(true);
-      console.log("[StickyHeader] Verifying token for user:", loggedInUser);
-      tokenverify({
-        variables: { token: localStorage.getItem("token") },
-        onCompleted: (data) => {
-          console.log("[StickyHeader] tokenVerify response:", data?.tokenVerify);
-          if (!data?.tokenVerify?.isValid) {
-            const refreshToken = localStorage.getItem("refreshToken");
-            if (refreshToken) {
-              tokenrefresh({
-                variables: { refreshToken },
-                onCompleted: (rData) => {
-                  console.log("[StickyHeader] tokenRefresh response:", rData?.tokenRefresh);
-                  if (rData?.tokenRefresh?.token) {
-                    localStorage.setItem("token", rData.tokenRefresh.token);
-                  } else {
-                    console.warn("[StickyHeader] tokenRefresh failed — resetting auth state");
-                    localStorage.removeItem("token");
-                    localStorage.removeItem("refreshToken");
-                    localStorage.removeItem("user");
-                    localStorage.removeItem("isLoggedIn");
-                    setIsLoggedIn(false);
-                    window.dispatchEvent(new Event("loginStatusChanged"));
+      const token = localStorage.getItem("token");
+      console.log("[StickyHeader] Verifying token for user:", loggedInUser || localStorage.getItem("userName"), "token present:", Boolean(token));
+      if (token) {
+        tokenverify({
+          variables: { token },
+          onCompleted: (data) => {
+            console.log("[StickyHeader] tokenVerify response:", data?.tokenVerify);
+            if (!data?.tokenVerify?.isValid) {
+              const refreshToken = localStorage.getItem("refreshToken");
+              if (refreshToken) {
+                tokenrefresh({
+                  variables: { refreshToken },
+                  onCompleted: (rData) => {
+                    console.log("[StickyHeader] tokenRefresh response:", rData?.tokenRefresh);
+                    if (rData?.tokenRefresh?.token) {
+                      localStorage.setItem("token", rData.tokenRefresh.token);
+                    } else {
+                      console.warn("[StickyHeader] tokenRefresh failed — keeping user identity");
+                    }
+                  },
+                  onError: (err) => {
+                    console.warn("[StickyHeader] tokenRefresh error — keeping user identity:", err);
                   }
-                },
-                onError: (err) => {
-                  console.error("[StickyHeader] tokenRefresh error:", err);
-                  localStorage.removeItem("token");
-                  localStorage.removeItem("refreshToken");
-                  localStorage.removeItem("user");
-                  localStorage.removeItem("isLoggedIn");
-                  setIsLoggedIn(false);
-                  window.dispatchEvent(new Event("loginStatusChanged"));
-                }
-              });
-            } else {
-              console.warn("[StickyHeader] No refreshToken found, resetting auth state");
-              localStorage.removeItem("token");
-              localStorage.removeItem("user");
-              localStorage.removeItem("isLoggedIn");
-              setIsLoggedIn(false);
-              window.dispatchEvent(new Event("loginStatusChanged"));
+                });
+              } else {
+                console.warn("[StickyHeader] No refreshToken found — keeping active user identity");
+              }
             }
+          },
+          onError: (err) => {
+            console.warn("[StickyHeader] tokenVerify error — keeping active user identity:", err);
           }
-        },
-        onError: (err) => {
-          console.error("[StickyHeader] tokenVerify error:", err);
-        }
-      });
+        });
+      }
       cemail = localStorage.getItem("email") || cemail;
     }
 
@@ -247,6 +233,11 @@ const StickyHeader = () => {
   });
 
   useEffect(() => {
+    console.log("[StickyHeader] categoriesData state:", {
+      hasData: Boolean(categoriesData?.categories?.edges?.length),
+      count: categoriesData?.categories?.edges?.length || 0,
+      error: categoriesError?.message || categoriesError
+    });
     if (categoriesError) {
       console.error("[StickyHeader] categoriesError (GET_CATEGORIES_SUBLIST):", categoriesError);
     }

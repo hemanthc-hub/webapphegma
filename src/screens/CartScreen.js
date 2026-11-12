@@ -31,6 +31,18 @@ const CartScreen = () => {
     console.log("Dev Log - Cart state:", { getInputValue, previous, refresh });
   }, [getInputValue, previous, refresh]);
 
+  useEffect(() => {
+    console.log("🛒 [CartScreen:QueryDiagnostics]", {
+      cartTokenInStorage: localStorage.getItem("cartToken"),
+      loading,
+      hasError: Boolean(error),
+      errorMessage: error?.message,
+      cartItemsData: cartItems,
+      checkoutLinesCount: cartItems?.checkout?.lines?.length ?? 0,
+      cartProductCount: cartProduct?.length ?? 0,
+    });
+  }, [loading, error, cartItems, cartProduct]);
+
 	const removeProduct=(id)=>{
 		// const { id } = e.target;
 		checkoutLineDelete({

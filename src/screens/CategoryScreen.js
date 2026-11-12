@@ -276,9 +276,9 @@ const CategoryScreen = () => {
 										<div className="product-default inner-quickview inner-icon">
 											<figure>
 												<Link to={{pathname: `/product/${value.node.id}/${value.node.slug}`}}>
-													<img src={value.node.media[0].url} width="280" height="280"
+													<img src={value.node.media?.[0]?.url || "/assets/images/logo.svg"} width="280" height="280"
 														alt="product" />
-													<img src={value.node.media[0].url} width="280" height="280"
+													<img src={value.node.media?.[0]?.url || "/assets/images/logo.svg"} width="280" height="280"
 														alt="product" />
 												</Link>
 

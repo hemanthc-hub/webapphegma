@@ -68,14 +68,8 @@ export const TopCategories: React.FC<TopCategoriesProps> = ({ className = "" }) 
     fetchPolicy: "cache-and-network"
   });
 
-  if (error) {
-    console.error("[TopCategories] GET_TOP_CATEGORIES error:", error);
-  }
-  if (data?.categories?.edges) {
-    console.log("[TopCategories] GET_TOP_CATEGORIES loaded:", data.categories.edges.length, "categories");
-  }
-
   const categories: CategoryNode[] = data?.categories?.edges?.map(edge => edge.node) || [];
+  console.log("[TopCategories] state:", { loading, error: error?.message || error, rawCount: categories.length });
 
   const scroll = (dir: "left" | "right") => {
     if (scrollRef.current) {
@@ -150,6 +144,8 @@ export const TopCategories: React.FC<TopCategoriesProps> = ({ className = "" }) 
   }
 
   if (error || displayCategories.length === 0) {
+    if (error) console.error("[TopCategories] Hiding TopCategories due to error:", error);
+    if (!error && displayCategories.length === 0 && !loading) console.warn("[TopCategories] displayCategories is empty, data:", data);
     return null;
   }
 

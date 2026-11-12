@@ -41,15 +41,16 @@ const ChangePasswordScreen = lazy(() => import('./screens/ChangePassowrdScreen')
 const SetPasswordScreen = lazy(() => import('./screens/SetPasswordScreen'));
 const ShippingDeliveryPolicy = lazy(() => import('./screens/ShippingDeliveryPolicy'));
 
-const errorLink = onError(({ graphQLErrors, networkError }) => {
+const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
   if (graphQLErrors)
-    graphQLErrors.forEach(({ message }) =>
-      console.error(`[GraphQL error]: ${message}`)
+    graphQLErrors.forEach(({ message, locations, path }) =>
+      console.error(`[GraphQL error in ${operation?.operationName || 'unknown'}]: ${message}`, { locations, path })
     );
-  if (networkError) console.error(`[Network error]: ${networkError}`);
+  if (networkError) console.error(`[Network error in ${operation?.operationName || 'unknown'}]:`, networkError);
 });
 
 const httpLink = new HttpLink({ uri: process.env.REACT_APP_GRAPHQL_URL || "/graphql" });
+console.log("[Hegma App] Active GraphQL endpoint:", process.env.REACT_APP_GRAPHQL_URL || "/graphql");
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('token');

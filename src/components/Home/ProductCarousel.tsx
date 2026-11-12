@@ -32,8 +32,10 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
   const displayProducts = products.filter((item) => item?.node?.id);
 
   if (displayProducts.length === 0) {
+    console.log("[ProductCarousel] no products to display (input count:", products.length, ")");
     return null;
   }
+  console.log("[ProductCarousel] rendering with products count:", displayProducts.length);
 
   const scroll = (direction: "left" | "right") => {
     scrollRef.current?.scrollBy({

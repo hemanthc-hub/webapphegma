@@ -40,11 +40,12 @@ const BannerMarquee = ({ bannerList }) => {
        else if (productMeta) linkPath = `/product/${productMeta.value}`;
     }
 
+    const imageUrl = hproducts2?.node?.media?.[0]?.url || "/assets/images/logo.svg";
     const content = (
       <img
-        src={hproducts2.node.media[0].url}
+        src={imageUrl}
         className="banner-image"
-        alt={hproducts2.node.name || "Banner"}
+        alt={hproducts2?.node?.name || "Banner"}
         loading="eager"
         decoding="async"
       />
